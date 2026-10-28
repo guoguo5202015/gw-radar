@@ -1,0 +1,34 @@
+name: 广外通知雷达
+
+on:
+  schedule:
+    - cron: "*/30 * * * *"   # 每30分钟一次（GitHub 高峰期可能延迟几分钟）
+  workflow_dispatch:          # 允许在网页上手动点“Run workflow”
+
+permissions:
+  contents: write
+
+concurrency:
+  group: radar
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: 抓取并推送
+        env:
+          PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
+        run: python gw_notify.py
+      - name: 保存记录和网页
+        run: |
+          git config user.name "radar-bot"
+          git config user.email "radar-bot@users.noreply.github.com"
+          git add seen.json docs/index.html
+          git diff --cached --quiet || git commit -m "更新通知 $(TZ=Asia/Shanghai date '+%m-%d %H:%M')"
+          git push
