@@ -216,6 +216,10 @@ def page_id(url):
     return "-".join(m.groups()) if m else re.sub(r"\W+", "-", url)[-40:]
 
 
+def has_page(it):
+    return os.path.exists(os.path.join(DOCS, "n", page_id(it["url"]) + ".html"))
+
+
 def page_url(it):
     return f"{SITE_URL}/n/{page_id(it['url'])}.html"
 
@@ -291,7 +295,7 @@ def render_index(st):
     rows = []
     for it in items[:500]:
         hot = it.get("score", 0) > 0
-        link = page_url(it).replace(SITE_URL + "/", "") if it.get("page") else it["url"]
+        link = page_url(it).replace(SITE_URL + "/", "") if has_page(it) else it["url"]
         dl = f' · <b>截止 {esc(it["deadline"])}</b>' if it.get("deadline") else ""
         rows.append(f'<li class="{"hot" if hot else ""}" data-t="{esc(it["title"] + it["source"])}">'
                     f'<a href="{esc(link)}">{"★ " if hot else ""}{esc(it["title"])}</a>'
@@ -355,7 +359,7 @@ def main():
     first = not st.get("initialized")
     arts = {}
     # 新通知全部抓正文；旧通知补做手机版页面（每轮最多30篇，慢慢补齐）
-    todo = [x for x in new] + [x for x in st["items"].values() if not x.get("page") and x not in new][:30]
+    todo = [x for x in new] + [x for x in st["items"].values() if not has_page(x) and x not in new][:40]
     for it in todo:
         try:
             art = fetch_article(it["url"])
@@ -389,7 +393,7 @@ def main():
             if hot:
                 time.sleep(PUSH_GAP)
             body = "".join(
-                f"<p style='font-size:16px;line-height:1.6;margin:0 0 12px'><a href='{page_url(x) if x.get('page') else x['url']}'>"
+                f"<p style='font-size:16px;line-height:1.6;margin:0 0 12px'><a href='{page_url(x) if has_page(x) else x['url']}'>"
                 f"{html.escape(x['title'])}</a><br><span style='font-size:13px;color:#888'>{html.escape(x['source'])} · {x['date']}</span></p>"
                 for x in rest[:25])
             push(f"其他新通知 {len(rest)} 条", f"<p style='font-size:13px;color:#888'>{html.escape(rest[0]['source'])} 等</p>" + body)
