@@ -30,7 +30,7 @@ jobs:
         run: |
           git config user.name "radar-bot"
           git config user.email "radar-bot@users.noreply.github.com"
-          git add seen.json docs/index.html
+          git add seen.json docs
           git diff --cached --quiet || git commit -m "更新通知 $(TZ=Asia/Shanghai date '+%m-%d %H:%M')"
           git push
       - name: 重新发布网页
