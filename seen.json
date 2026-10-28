@@ -447,7 +447,9 @@
    "source": "会计学院·首页",
    "found": "2026-10-28T11:18+08:00",
    "score": 0,
-   "keys": []
+   "keys": [],
+   "deadline": "",
+   "page": true
   },
   "https://internationaloffice.gdufs.edu.cn/info/1069/8286.htm": {
    "title": "广东外语外贸大学本科学生出国（境）学习奖学金管理办法",
@@ -456,25 +458,31 @@
    "source": "国际交流合作部·通知",
    "found": "2026-10-28T11:18+08:00",
    "score": 1,
-   "keys": []
+   "keys": [],
+   "deadline": "",
+   "page": true
   },
   "https://internationaloffice.gdufs.edu.cn/info/1069/5623.htm": {
    "title": "关于报名参加日本京都女子大学暑期项目的选拔通知",
    "url": "https://internationaloffice.gdufs.edu.cn/info/1069/5623.htm",
-   "date": "",
+   "date": "2018-03-31",
    "source": "国际交流合作部·通知",
    "found": "2026-10-28T11:18+08:00",
    "score": 2,
-   "keys": []
+   "keys": [],
+   "deadline": "3月31日",
+   "page": true
   },
   "https://internationaloffice.gdufs.edu.cn/info/1112/13759.htm": {
    "title": "2026年阿德莱德大学视界行项目公示名单",
    "url": "https://internationaloffice.gdufs.edu.cn/info/1112/13759.htm",
-   "date": "",
+   "date": "2026-04-29",
    "source": "国际交流合作部·公示",
    "found": "2026-10-28T11:18+08:00",
    "score": 0,
-   "keys": []
+   "keys": [],
+   "deadline": "",
+   "page": true
   },
   "https://internationaloffice.gdufs.edu.cn/info/1029/16789.htm": {
    "title": "我校举行2026年秋季学期外籍及港澳台教师见面会",
@@ -483,7 +491,9 @@
    "source": "国际交流合作部·首页",
    "found": "2026-10-28T11:18+08:00",
    "score": 0,
-   "keys": []
+   "keys": [],
+   "deadline": "",
+   "page": true
   },
   "https://internationaloffice.gdufs.edu.cn/info/1029/15759.htm": {
    "title": "印尼伊斯兰教法学者理事会代表团来访我校",
@@ -492,7 +502,9 @@
    "source": "国际交流合作部·首页",
    "found": "2026-10-28T11:18+08:00",
    "score": 0,
-   "keys": []
+   "keys": [],
+   "deadline": "",
+   "page": true
   },
   "https://internationaloffice.gdufs.edu.cn/info/1029/15499.htm": {
    "title": "瑙鲁共和国教育部部长一行来访我校",
@@ -501,7 +513,9 @@
    "source": "国际交流合作部·首页",
    "found": "2026-10-28T11:18+08:00",
    "score": 0,
-   "keys": []
+   "keys": [],
+   "deadline": "",
+   "page": true
   },
   "https://internationaloffice.gdufs.edu.cn/info/1029/15519.htm": {
    "title": "葡萄牙里斯本大学学院副校长来访我校",
@@ -510,7 +524,9 @@
    "source": "国际交流合作部·首页",
    "found": "2026-10-28T11:18+08:00",
    "score": 0,
-   "keys": []
+   "keys": [],
+   "deadline": "",
+   "page": true
   },
   "https://internationaloffice.gdufs.edu.cn/info/1029/15479.htm": {
    "title": "乌兹别克斯坦共和国驻广州总领事一行来访",
@@ -519,7 +535,9 @@
    "source": "国际交流合作部·首页",
    "found": "2026-10-28T11:18+08:00",
    "score": 0,
-   "keys": []
+   "keys": [],
+   "deadline": "",
+   "page": true
   },
   "https://internationaloffice.gdufs.edu.cn/info/1029/15459.htm": {
    "title": "马来西亚亚太一带一路共策会会长翁诗杰一行来访我校",
@@ -528,7 +546,9 @@
    "source": "国际交流合作部·首页",
    "found": "2026-10-28T11:18+08:00",
    "score": 0,
-   "keys": []
+   "keys": [],
+   "deadline": "",
+   "page": true
   },
   "https://internationaloffice.gdufs.edu.cn/info/1029/15299.htm": {
    "title": "校领导赴澳门出席第四届中国与葡语国家高校校长论坛并作主旨发言",
@@ -537,7 +557,9 @@
    "source": "国际交流合作部·首页",
    "found": "2026-10-28T11:18+08:00",
    "score": 0,
-   "keys": []
+   "keys": [],
+   "deadline": "",
+   "page": true
   },
   "https://internationaloffice.gdufs.edu.cn/info/1029/15229.htm": {
    "title": "巴布亚新几内亚总理办公室主任一行来访我校",
@@ -546,7 +568,9 @@
    "source": "国际交流合作部·首页",
    "found": "2026-10-28T11:18+08:00",
    "score": 0,
-   "keys": []
+   "keys": [],
+   "deadline": "",
+   "page": true
   },
   "https://internationaloffice.gdufs.edu.cn/info/1029/15059.htm": {
    "title": "我校与美国金门大学召开线上合作洽谈会",
@@ -555,7 +579,9 @@
    "source": "国际交流合作部·首页",
    "found": "2026-10-28T11:18+08:00",
    "score": 0,
-   "keys": []
+   "keys": [],
+   "deadline": "",
+   "page": true
   },
   "https://internationaloffice.gdufs.edu.cn/info/1069/8285.htm": {
    "title": "本科生国（境）外访学交流项目介绍",
@@ -564,7 +590,9 @@
    "source": "国际交流合作部·首页",
    "found": "2026-10-28T11:18+08:00",
    "score": 2,
-   "keys": []
+   "keys": [],
+   "deadline": "",
+   "page": true
   },
   "https://internationaloffice.gdufs.edu.cn/info/1070/11152.htm": {
    "title": "Recruitment Requirements for International Talents in the College of Arts",
@@ -573,7 +601,9 @@
    "source": "国际交流合作部·首页",
    "found": "2026-10-28T11:18+08:00",
    "score": 0,
-   "keys": []
+   "keys": [],
+   "deadline": "",
+   "page": true
   },
   "https://internationaloffice.gdufs.edu.cn/info/1070/10405.htm": {
    "title": "广东省高等院校教育对外开放工作座谈会在我校召开",
@@ -582,7 +612,9 @@
    "source": "国际交流合作部·首页",
    "found": "2026-10-28T11:18+08:00",
    "score": 0,
-   "keys": []
+   "keys": [],
+   "deadline": "",
+   "page": true
   },
   "https://internationaloffice.gdufs.edu.cn/info/1070/9504.htm": {
    "title": "2022年度广东外语外贸大学海外名师 讲学项目拟立项名单公示",
@@ -591,7 +623,9 @@
    "source": "国际交流合作部·首页",
    "found": "2026-10-28T11:18+08:00",
    "score": 1,
-   "keys": []
+   "keys": [],
+   "deadline": "",
+   "page": true
   },
   "https://internationaloffice.gdufs.edu.cn/info/1070/7942.htm": {
    "title": "New Permanent Residence Law for Foreigners(Draft Version)",
@@ -600,7 +634,9 @@
    "source": "国际交流合作部·首页",
    "found": "2026-10-28T11:18+08:00",
    "score": 0,
-   "keys": []
+   "keys": [],
+   "deadline": "",
+   "page": true
   },
   "https://internationaloffice.gdufs.edu.cn/info/1070/7932.htm": {
    "title": "Notice on Printing and Distributing the Plan for the Second Semester of 2019-2020 Academic Year of Guangdong University of Foreign Studies",
@@ -609,7 +645,9 @@
    "source": "国际交流合作部·首页",
    "found": "2026-10-28T11:18+08:00",
    "score": 0,
-   "keys": []
+   "keys": [],
+   "deadline": "",
+   "page": true
   },
   "https://internationaloffice.gdufs.edu.cn/info/1070/7902.htm": {
    "title": "A Letter to Faculty, Students and Staff of GDUFS",
@@ -618,7 +656,9 @@
    "source": "国际交流合作部·首页",
    "found": "2026-10-28T11:18+08:00",
    "score": 0,
-   "keys": []
+   "keys": [],
+   "deadline": "",
+   "page": true
   },
   "https://internationaloffice.gdufs.edu.cn/info/1069/5816.htm": {
    "title": "香港浸会大学双学位奖学金项目咨询答疑Coffee Chat活动",
@@ -627,7 +667,9 @@
    "source": "国际交流合作部·首页",
    "found": "2026-10-28T11:18+08:00",
    "score": 1,
-   "keys": []
+   "keys": [],
+   "deadline": "",
+   "page": true
   },
   "https://internationaloffice.gdufs.edu.cn/info/1069/5793.htm": {
    "title": "关于公布2017-2018-2学期赴加大河滨分校单项派出项目",
@@ -636,7 +678,9 @@
    "source": "国际交流合作部·首页",
    "found": "2026-10-28T11:18+08:00",
    "score": 0,
-   "keys": []
+   "keys": [],
+   "deadline": "",
+   "page": true
   },
   "https://internationaloffice.gdufs.edu.cn/info/1113/10052.htm": {
    "title": "2022-2023学年“优秀境外教师”评选结果公示 Announcement on “Outstanding International Teachers” For Academic Year 2022-2023",
@@ -645,7 +689,9 @@
    "source": "国际交流合作部·首页",
    "found": "2026-10-28T11:18+08:00",
    "score": 1,
-   "keys": []
+   "keys": [],
+   "deadline": "",
+   "page": true
   },
   "https://internationaloffice.gdufs.edu.cn/info/1113/9936.htm": {
    "title": "2023年度广东外语外贸大学海外名师 讲学项目拟立项名单公示",
@@ -654,7 +700,9 @@
    "source": "国际交流合作部·首页",
    "found": "2026-10-28T11:18+08:00",
    "score": 1,
-   "keys": []
+   "keys": [],
+   "deadline": "",
+   "page": true
   },
   "https://internationaloffice.gdufs.edu.cn/info/1113/9506.htm": {
    "title": "2021-2022学年“优秀外籍及港澳台”评选结果公示Announceme​nt on “Outstanding International Teachers” For Academic Year 2021-2022",
@@ -663,7 +711,9 @@
    "source": "国际交流合作部·首页",
    "found": "2026-10-28T11:18+08:00",
    "score": 0,
-   "keys": []
+   "keys": [],
+   "deadline": "",
+   "page": true
   },
   "https://internationaloffice.gdufs.edu.cn/info/1113/8760.htm": {
    "title": "2020-2021学年度“优秀境外教师”评选结果公示",
@@ -672,7 +722,9 @@
    "source": "国际交流合作部·首页",
    "found": "2026-10-28T11:18+08:00",
    "score": 1,
-   "keys": []
+   "keys": [],
+   "deadline": "",
+   "page": true
   },
   "https://internationaloffice.gdufs.edu.cn/info/1113/8393.htm": {
    "title": "2019-2020 学年度优秀境外教师评选结果公示 Outstanding International Teachers Academic Year 2019-2020",
@@ -681,7 +733,9 @@
    "source": "国际交流合作部·首页",
    "found": "2026-10-28T11:18+08:00",
    "score": 1,
-   "keys": []
+   "keys": [],
+   "deadline": "",
+   "page": true
   },
   "https://jwb.gdufs.edu.cn/info/1045/3784.htm": {
    "title": "2024年省级课程思政改革示范项目拟推荐名单公示",
@@ -690,7 +744,9 @@
    "source": "教务部·通知",
    "found": "2026-10-28T11:18+08:00",
    "score": 0,
-   "keys": []
+   "keys": [],
+   "deadline": "",
+   "page": true
   },
   "https://jwb.gdufs.edu.cn/info/1045/3628.htm": {
    "title": "第三批国家级一流本科课程拟推荐名单公示",
@@ -699,7 +755,9 @@
    "source": "教务部·通知",
    "found": "2026-10-28T11:18+08:00",
    "score": 0,
-   "keys": []
+   "keys": [],
+   "deadline": "",
+   "page": true
   },
   "https://jwb.gdufs.edu.cn/info/1045/1184.htm": {
    "title": "关于林倩莹等6名本科学生学籍信息更改的公示",
@@ -708,7 +766,9 @@
    "source": "教务部·通知",
    "found": "2026-10-28T11:18+08:00",
    "score": 0,
-   "keys": []
+   "keys": [],
+   "deadline": "",
+   "page": true
   },
   "https://jwb.gdufs.edu.cn/info/1045/1182.htm": {
    "title": "关于举办教师创新大赛省赛培训的通知",
@@ -717,7 +777,9 @@
    "source": "教务部·通知",
    "found": "2026-10-28T11:18+08:00",
    "score": 0,
-   "keys": []
+   "keys": [],
+   "deadline": "",
+   "page": true
   },
   "https://jwb.gdufs.edu.cn/info/1044/3834.htm": {
    "title": "广东外语外贸大学2024年省级教学质量与教学改革工程拟推荐项目名单公示",
@@ -726,7 +788,9 @@
    "source": "教务部·教学通知",
    "found": "2026-10-28T11:18+08:00",
    "score": 0,
-   "keys": []
+   "keys": [],
+   "deadline": "",
+   "page": true
   },
   "https://jwb.gdufs.edu.cn/info/1044/3687.htm": {
    "title": "关于遴选推荐省级第二批美育名师工作室的通知",
@@ -735,7 +799,9 @@
    "source": "教务部·教学通知",
    "found": "2026-10-28T11:18+08:00",
    "score": 0,
-   "keys": []
+   "keys": [],
+   "deadline": "5月6日",
+   "page": true
   },
   "https://jwb.gdufs.edu.cn/info/1044/3588.htm": {
    "title": "关于开展省“教学质量与教学改革工程”2020年立项项目校内结题验收工作的通知",
@@ -744,7 +810,9 @@
    "source": "教务部·教学通知",
    "found": "2026-10-28T11:18+08:00",
    "score": 0,
-   "keys": []
+   "keys": [],
+   "deadline": "11月24日12：00",
+   "page": true
   },
   "https://jwb.gdufs.edu.cn/info/1044/3565.htm": {
    "title": "关于开展2023年度第二批校级教学研究与改革项目结题验收工作的通知",
@@ -753,7 +821,9 @@
    "source": "教务部·教学通知",
    "found": "2026-10-28T11:18+08:00",
    "score": 0,
-   "keys": []
+   "keys": [],
+   "deadline": "11月23日",
+   "page": true
   },
   "https://jwb.gdufs.edu.cn/info/1044/3504.htm": {
    "title": "2022-2023学年度第二学期本科交换生赴国（境）外交换学习前办理教务手续的通知",
@@ -762,7 +832,9 @@
    "source": "教务部·教学通知",
    "found": "2026-10-28T11:18+08:00",
    "score": 1,
-   "keys": []
+   "keys": [],
+   "deadline": "",
+   "page": true
   },
   "https://youth.gdufs.edu.cn/info/1050/12902.htm": {
    "title": "关于广东外语外贸大学第四批“中国青年志愿者海外服务计划--服务联合国机构项目”拟推荐志愿者候选人名单的公示",
@@ -771,7 +843,9 @@
    "source": "校团委",
    "found": "2026-10-28T11:18+08:00",
    "score": 1,
-   "keys": []
+   "keys": [],
+   "deadline": "",
+   "page": true
   },
   "https://youth.gdufs.edu.cn/info/1051/13042.htm": {
    "title": "趣味运动+素质培训，促学生骨干成长",
@@ -780,7 +854,9 @@
    "source": "校团委",
    "found": "2026-10-28T11:18+08:00",
    "score": 0,
-   "keys": []
+   "keys": [],
+   "deadline": "",
+   "page": true
   },
   "https://youth.gdufs.edu.cn/info/1053/11241.htm": {
    "title": "百千万工程（第四十三期） | 粤有新意实践团：实践花开初夏日 墙绘细悟共成长",
@@ -789,7 +865,9 @@
    "source": "校团委",
    "found": "2026-10-28T11:18+08:00",
    "score": 0,
-   "keys": []
+   "keys": [],
+   "deadline": "",
+   "page": true
   },
   "https://youth.gdufs.edu.cn/info/1054/10748.htm": {
    "title": "多语言志愿服务中心党支部召开雷锋精神学习会",
@@ -798,7 +876,9 @@
    "source": "校团委",
    "found": "2026-10-28T11:18+08:00",
    "score": 0,
-   "keys": []
+   "keys": [],
+   "deadline": "",
+   "page": true
   },
   "https://youth.gdufs.edu.cn/info/1055/11102.htm": {
    "title": "西部计划｜谢可心：带着一颗“疆心”到西部创未来",
