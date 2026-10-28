@@ -887,7 +887,9 @@
    "source": "校团委",
    "found": "2026-10-28T11:18+08:00",
    "score": 0,
-   "keys": []
+   "keys": [],
+   "deadline": "",
+   "page": true
   },
   "https://youth.gdufs.edu.cn/info/1023/10700.htm": {
    "title": "校团委举办新媒体达人特训营开班仪式暨开班“第一讲”",
@@ -896,7 +898,9 @@
    "source": "校团委",
    "found": "2026-10-28T11:18+08:00",
    "score": 0,
-   "keys": []
+   "keys": [],
+   "deadline": "",
+   "page": true
   },
   "https://youth.gdufs.edu.cn/info/1024/10729.htm": {
    "title": "广东外语外贸大学学生社团活动申请审批表",
@@ -905,7 +909,9 @@
    "source": "校团委",
    "found": "2026-10-28T11:18+08:00",
    "score": 1,
-   "keys": []
+   "keys": [],
+   "deadline": "",
+   "page": true
   },
   "https://youth.gdufs.edu.cn/info/1056/11169.htm": {
    "title": "百千万工程（第六期）｜国际商务英语学院侨乡邑梦实践团：送展下乡，侨音广颂",
@@ -914,34 +920,42 @@
    "source": "校团委",
    "found": "2026-10-28T11:18+08:00",
    "score": 0,
-   "keys": []
+   "keys": [],
+   "deadline": "",
+   "page": true
   },
   "https://gwcxcy.gdufs.edu.cn/info/1200/6824.htm": {
    "title": "喜报！我院项目入选广东省“科教产融创”一体化创新创业人才培养试点立项名单",
    "url": "https://gwcxcy.gdufs.edu.cn/info/1200/6824.htm",
-   "date": "",
+   "date": "2026-08-19",
    "source": "创新创业学院",
    "found": "2026-10-28T11:18+08:00",
    "score": 0,
-   "keys": []
+   "keys": [],
+   "deadline": "",
+   "page": true
   },
   "https://gwcxcy.gdufs.edu.cn/info/1200/6334.htm": {
    "title": "第七届博雅论坛暨首届全国外语院校创新创业论坛顺利举办",
    "url": "https://gwcxcy.gdufs.edu.cn/info/1200/6334.htm",
-   "date": "",
+   "date": "2026-04-28",
    "source": "创新创业学院",
    "found": "2026-10-28T11:18+08:00",
    "score": 0,
-   "keys": []
+   "keys": [],
+   "deadline": "",
+   "page": true
   },
   "https://gwcxcy.gdufs.edu.cn/info/1200/4376.htm": {
    "title": "出征！石佑启与创新创业团队见面并作创新大赛国赛总动员",
    "url": "https://gwcxcy.gdufs.edu.cn/info/1200/4376.htm",
-   "date": "",
+   "date": "2024-10-12",
    "source": "创新创业学院",
    "found": "2026-10-28T11:18+08:00",
    "score": 1,
-   "keys": []
+   "keys": [],
+   "deadline": "",
+   "page": true
   },
   "https://gwcxcy.gdufs.edu.cn/info/1201/6894.htm": {
    "title": "关于”澄迈杯”人工智能+创新创业大赛启动报名的通知",
@@ -950,16 +964,20 @@
    "source": "创新创业学院",
    "found": "2026-10-28T11:18+08:00",
    "score": 2,
-   "keys": []
+   "keys": [],
+   "deadline": "",
+   "page": true
   },
   "https://gwcxcy.gdufs.edu.cn/info/1201/6694.htm": {
    "title": "通知 | 关于举办第十一届全国财经院校创新创业大赛的通知（第一轮）",
    "url": "https://gwcxcy.gdufs.edu.cn/info/1201/6694.htm",
-   "date": "",
+   "date": "2026-06-08",
    "source": "创新创业学院",
    "found": "2026-10-28T11:18+08:00",
    "score": 0,
-   "keys": []
+   "keys": [],
+   "deadline": "",
+   "page": true
   },
   "https://gwcxcy.gdufs.edu.cn/info/1202/6344.htm": {
    "title": "第七届博雅论坛暨首届全国外语院校创新创业论坛顺利举办",
@@ -968,7 +986,9 @@
    "source": "创新创业学院",
    "found": "2026-10-28T11:18+08:00",
    "score": 0,
-   "keys": []
+   "keys": [],
+   "deadline": "",
+   "page": true
   },
   "https://gwcxcy.gdufs.edu.cn/info/1202/5854.htm": {
    "title": "《管理世界》2025年第一期“学术研究与论文写作”（创新创业专题）研修班在我校成功举办",
@@ -977,115 +997,141 @@
    "source": "创新创业学院",
    "found": "2026-10-28T11:18+08:00",
    "score": 0,
-   "keys": []
+   "keys": [],
+   "deadline": "",
+   "page": true
   },
   "https://gwcxcy.gdufs.edu.cn/info/1171/6484.htm": {
    "title": "中国国际大学生创新大赛（2026）广外校决赛顺利举行",
    "url": "https://gwcxcy.gdufs.edu.cn/info/1171/6484.htm",
-   "date": "",
+   "date": "2026-05-19",
    "source": "创新创业学院",
    "found": "2026-10-28T11:18+08:00",
    "score": 0,
-   "keys": []
+   "keys": [],
+   "deadline": "",
+   "page": true
   },
   "https://gwcxcy.gdufs.edu.cn/info/1171/6424.htm": {
    "title": "“数字创新与创业”微专业行业专家讲座暨创新创业大讲堂第十五讲顺利举行",
    "url": "https://gwcxcy.gdufs.edu.cn/info/1171/6424.htm",
-   "date": "",
+   "date": "2026-04-01",
    "source": "创新创业学院",
    "found": "2026-10-28T11:18+08:00",
    "score": 0,
-   "keys": []
+   "keys": [],
+   "deadline": "",
+   "page": true
   },
   "https://gwcxcy.gdufs.edu.cn/info/1181/6374.htm": {
    "title": "我院教师创业案例研究论文被《南开管理评论》重磅书系《跨越鸿沟》收录",
    "url": "https://gwcxcy.gdufs.edu.cn/info/1181/6374.htm",
-   "date": "",
+   "date": "2026-05-06",
    "source": "创新创业学院",
    "found": "2026-10-28T11:18+08:00",
    "score": 0,
-   "keys": []
+   "keys": [],
+   "deadline": "",
+   "page": true
   },
   "https://gwcxcy.gdufs.edu.cn/info/1181/5674.htm": {
    "title": "我院刘方龙老师在顶级期刊《管理世界》发表关于创业团队演化的论文",
    "url": "https://gwcxcy.gdufs.edu.cn/info/1181/5674.htm",
-   "date": "",
+   "date": "2024-05-16",
    "source": "创新创业学院",
    "found": "2026-10-28T11:18+08:00",
    "score": 0,
-   "keys": []
+   "keys": [],
+   "deadline": "",
+   "page": true
   },
   "https://gwcxcy.gdufs.edu.cn/info/1184/4527.htm": {
    "title": "中国国际大学生创新大赛（2025）校赛启动会顺利举行",
    "url": "https://gwcxcy.gdufs.edu.cn/info/1184/4527.htm",
-   "date": "",
+   "date": "2025-03-17",
    "source": "创新创业学院",
    "found": "2026-10-28T11:18+08:00",
    "score": 0,
-   "keys": []
+   "keys": [],
+   "deadline": "",
+   "page": true
   },
   "https://gwcxcy.gdufs.edu.cn/info/1184/6314.htm": {
    "title": "国创赛主题宣讲暨创新创业成果展顺利举行",
    "url": "https://gwcxcy.gdufs.edu.cn/info/1184/6314.htm",
-   "date": "",
+   "date": "2026-04-21",
    "source": "创新创业学院",
    "found": "2026-10-28T11:18+08:00",
    "score": 0,
-   "keys": []
+   "keys": [],
+   "deadline": "",
+   "page": true
   },
   "https://gwcxcy.gdufs.edu.cn/info/1189/6644.htm": {
    "title": "番禺区劳动就业服务管理中心一行到访基地",
    "url": "https://gwcxcy.gdufs.edu.cn/info/1189/6644.htm",
-   "date": "",
+   "date": "2026-06-02",
    "source": "创新创业学院",
    "found": "2026-10-28T11:18+08:00",
    "score": 0,
-   "keys": []
+   "keys": [],
+   "deadline": "",
+   "page": true
   },
   "https://gwcxcy.gdufs.edu.cn/info/1189/6324.htm": {
    "title": "国创赛主题宣讲暨创新创业成果展顺利举行",
    "url": "https://gwcxcy.gdufs.edu.cn/info/1189/6324.htm",
-   "date": "",
+   "date": "2026-04-21",
    "source": "创新创业学院",
    "found": "2026-10-28T11:18+08:00",
    "score": 0,
-   "keys": []
+   "keys": [],
+   "deadline": "",
+   "page": true
   },
   "https://gwcxcy.gdufs.edu.cn/info/1189/6094.htm": {
    "title": "“数字创新与创业”微专业行业专家讲座暨创新创业大讲堂第十四讲顺利举行",
    "url": "https://gwcxcy.gdufs.edu.cn/info/1189/6094.htm",
-   "date": "",
+   "date": "2026-03-25",
    "source": "创新创业学院",
    "found": "2026-10-28T11:18+08:00",
    "score": 0,
-   "keys": []
+   "keys": [],
+   "deadline": "",
+   "page": true
   },
   "https://gwcxcy.gdufs.edu.cn/info/1188/6844.htm": {
    "title": "喜报！我院项目入选广东省“科教产融创”一体化创新创业人才培养试点立项名单",
    "url": "https://gwcxcy.gdufs.edu.cn/info/1188/6844.htm",
-   "date": "",
+   "date": "2026-08-19",
    "source": "创新创业学院",
    "found": "2026-10-28T11:18+08:00",
    "score": 0,
-   "keys": []
+   "keys": [],
+   "deadline": "",
+   "page": true
   },
   "https://gwcxcy.gdufs.edu.cn/info/1188/6934.htm": {
    "title": "喜报！两项创新创业荣誉!",
    "url": "https://gwcxcy.gdufs.edu.cn/info/1188/6934.htm",
-   "date": "",
+   "date": "2026-10-08",
    "source": "创新创业学院",
    "found": "2026-10-28T11:18+08:00",
    "score": 0,
-   "keys": []
+   "keys": [],
+   "deadline": "",
+   "page": true
   },
   "https://gwcxcy.gdufs.edu.cn/info/1188/6444.htm": {
    "title": "广外校友、美国亚美商会执行会长陈辽瑞来院调研交流",
    "url": "https://gwcxcy.gdufs.edu.cn/info/1188/6444.htm",
-   "date": "",
+   "date": "2026-05-09",
    "source": "创新创业学院",
    "found": "2026-10-28T11:18+08:00",
    "score": 0,
-   "keys": []
+   "keys": [],
+   "deadline": "",
+   "page": true
   },
   "https://nstu.gdufs.edu.cn/info/1056/68801.htm": {
    "title": "关于我校2025-2026学年本科生港澳及华侨学生、台湾学生奖学金建议名单的公示",
@@ -1094,7 +1140,9 @@
    "source": "学生工作部",
    "found": "2026-10-28T11:27+08:00",
    "score": 1,
-   "keys": []
+   "keys": [],
+   "deadline": "",
+   "page": true
   },
   "https://nstu.gdufs.edu.cn/info/1056/68781.htm": {
    "title": "2026年研究生学业奖学金拟获奖名单公示",
@@ -1103,7 +1151,9 @@
    "source": "学生工作部",
    "found": "2026-10-28T11:27+08:00",
    "score": 1,
-   "keys": []
+   "keys": [],
+   "deadline": "",
+   "page": true
   },
   "https://nstu.gdufs.edu.cn/info/1056/68871.htm": {
    "title": "关于开展地震受灾学生临时困难补助申请的通知",
