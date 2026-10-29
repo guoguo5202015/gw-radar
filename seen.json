@@ -1174,6 +1174,16 @@
    "score": 2,
    "deadline": "5月5日17：00",
    "page": true
+  },
+  "https://youth.gdufs.edu.cn/info/1050/13012.htm": {
+   "title": "第三届青春扬帆·全球学生交流大使团拟推荐名单",
+   "url": "https://youth.gdufs.edu.cn/info/1050/13012.htm",
+   "date": "2026-10-17",
+   "source": "校团委",
+   "found": "2026-10-29T15:30+08:00",
+   "score": 0,
+   "deadline": "",
+   "page": true
   }
  },
  "initialized": true
