@@ -1194,6 +1194,46 @@
    "score": 0,
    "deadline": "",
    "page": true
+  },
+  "https://nstu.gdufs.edu.cn/info/1056/68911.htm": {
+   "title": "关于公示2025-2026学年度本科生国家励志奖学金候选人名单",
+   "url": "https://nstu.gdufs.edu.cn/info/1056/68911.htm",
+   "date": "2026-10-23",
+   "source": "学生工作部",
+   "found": "2026-10-30T21:20+08:00",
+   "score": 1,
+   "deadline": "",
+   "page": true
+  },
+  "https://nstu.gdufs.edu.cn/info/1056/68921.htm": {
+   "title": "关于公布“赓续长征薪火 凝聚青春力量”第四届青年师生思政微课大赛比赛结果的通知",
+   "url": "https://nstu.gdufs.edu.cn/info/1056/68921.htm",
+   "date": "2026-10-22",
+   "source": "学生工作部",
+   "found": "2026-10-30T21:20+08:00",
+   "score": 1,
+   "deadline": "",
+   "page": true
+  },
+  "https://nstu.gdufs.edu.cn/info/1056/68791.htm": {
+   "title": "关于2025-2026学年“校长奖章”候选人名单的公示",
+   "url": "https://nstu.gdufs.edu.cn/info/1056/68791.htm",
+   "date": "2026-10-20",
+   "source": "学生工作部",
+   "found": "2026-10-30T21:20+08:00",
+   "score": 0,
+   "deadline": "",
+   "page": true
+  },
+  "https://nstu.gdufs.edu.cn/info/1056/68771.htm": {
+   "title": "2026年研究生国家奖学金拟获奖名单公示",
+   "url": "https://nstu.gdufs.edu.cn/info/1056/68771.htm",
+   "date": "2026-10-19",
+   "source": "学生工作部",
+   "found": "2026-10-30T21:20+08:00",
+   "score": 1,
+   "deadline": "",
+   "page": true
   }
  },
  "initialized": true
