@@ -1234,6 +1234,46 @@
    "score": 1,
    "deadline": "",
    "page": true
+  },
+  "https://nstu.gdufs.edu.cn/info/1101/68621.htm": {
+   "title": "校领导申明浩接待学生",
+   "url": "https://nstu.gdufs.edu.cn/info/1101/68621.htm",
+   "date": "2026-09-28",
+   "source": "学生工作部",
+   "found": "2026-11-02T12:39+08:00",
+   "score": 0,
+   "deadline": "",
+   "page": true
+  },
+  "https://nstu.gdufs.edu.cn/info/1101/68591.htm": {
+   "title": "校领导葛小月接待学生",
+   "url": "https://nstu.gdufs.edu.cn/info/1101/68591.htm",
+   "date": "2026-07-08",
+   "source": "学生工作部",
+   "found": "2026-11-02T12:39+08:00",
+   "score": 0,
+   "deadline": "",
+   "page": true
+  },
+  "https://nstu.gdufs.edu.cn/info/1101/67671.htm": {
+   "title": "副校长刘建达指导翻译学院主题班会",
+   "url": "https://nstu.gdufs.edu.cn/info/1101/67671.htm",
+   "date": "2026-07-02",
+   "source": "学生工作部",
+   "found": "2026-11-02T12:39+08:00",
+   "score": 0,
+   "deadline": "",
+   "page": true
+  },
+  "https://nstu.gdufs.edu.cn/info/1101/67641.htm": {
+   "title": "校长闫相斌与同学们面对面，同心话成长",
+   "url": "https://nstu.gdufs.edu.cn/info/1101/67641.htm",
+   "date": "2026-07-01",
+   "source": "学生工作部",
+   "found": "2026-11-02T12:39+08:00",
+   "score": 0,
+   "deadline": "",
+   "page": true
   }
  },
  "initialized": true
