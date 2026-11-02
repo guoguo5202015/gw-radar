@@ -312,6 +312,7 @@ def send_mail(subject, content_html):
         except Exception as e:
             print("[发信失败，重试]", e)
             time.sleep(5)
+    raise SystemExit("发信失败：检查 MAIL_USER 是不是邮箱地址、MAIL_PASS 是不是授权码")
 
 
 def render_index(st):
@@ -412,6 +413,17 @@ def main():
             subject = (f"【{md.group(1)}/{md.group(2)}截止】" if md else "") + short_title(it["title"], 40)
             send_mail(subject, mail_html(it, art))
             time.sleep(3)
+
+    # 在网页上手动点 Run workflow 时，发一封测试邮件，确认邮箱通道是通的
+    if os.environ.get("GITHUB_EVENT_NAME") == "workflow_dispatch" and not dry:
+        recent = sorted((x for x in st["items"].values() if x.get("score")),
+                        key=lambda x: x.get("date") or "", reverse=True)[:5]
+        body = ("<p style='font-size:16px;line-height:1.7'>收到这封邮件，说明邮件通道是通的。以后有要你动手的新通知"
+                "（报名、选拔、竞赛、申请），会一条一封发到这里。</p><p style='font-size:15px;color:#888'>最近几条重要通知</p>" +
+                "".join(f"<p style='font-size:15px;line-height:1.6;margin:0 0 8px'>{html.escape(x['title'])}"
+                        f"<br><span style='color:#888;font-size:13px'>{html.escape(x['source'])} · {x.get('date','')}</span></p>"
+                        for x in recent))
+        send_mail("广外通知雷达 测试邮件", body)
 
     if dry:
         return
