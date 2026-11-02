@@ -566,19 +566,19 @@ def main():
     # 在网页上手动点 Run workflow 时，发一封测试邮件，确认邮箱通道是通的
     if os.environ.get("GITHUB_EVENT_NAME") == "workflow_dispatch" and not dry:
         recent = sorted((x for x in st["items"].values() if x.get("score")),
-                        key=lambda x: x.get("date") or "", reverse=True)[:5]
-        li = "".join(
-            f"<tr><td style='padding:12px 0;border-top:1px solid {LINE}'><div style='font-size:15px;line-height:1.6;color:{INK}'>"
-            f"{html.escape(x['title'])}</div><div style='font-size:12px;color:{MUTE};margin-top:3px'>{html.escape(x['source'])} · "
-            f"{x.get('date','')}</div></td></tr>" for x in recent)
-        body = mail_shell(
-            f"<div style='font-size:12px;letter-spacing:2px;color:{MUTE};margin-bottom:14px'>测试</div>"
-            f"<h1 style='margin:0 0 14px;font-family:{SERIF};font-size:23px;line-height:1.45;color:{INK}'>邮件通道已接通</h1>"
-            f"<p style='margin:0 0 22px;font-size:16px;line-height:1.85;color:{BODY}'>以后有要你动手的新通知，报名、选拔、竞赛、申请，"
-            f"会一条一封发到这里。新闻稿和公示名单不会再发。</p>"
-            f"<div style='font-size:12px;letter-spacing:2px;color:{MUTE};margin-bottom:4px'>最近的重要通知</div>"
-            f"<table role='presentation' width='100%' cellpadding='0' cellspacing='0'>{li}</table>", "邮件通道已接通")
-        send_mail("广外通知雷达 测试邮件", body)
+                        key=lambda x: (bool(x.get("deadline")), x.get("date") or ""), reverse=True)[:5]
+        # 拿最近一条重要通知按正式格式发一封，顺便看排版
+        for x in recent:
+            try:
+                art = fetch_article(x["url"])
+            except Exception as e:
+                print("[样例正文失败]", e)
+                continue
+            send_mail("【样例】" + mail_subject(x, art), mail_html(x, art))
+            break
+        else:
+            send_mail("广外通知雷达 测试邮件", mail_shell(
+                f"<h1 style='margin:0;font-family:{SERIF};font-size:23px;color:{INK}'>邮件通道已接通</h1>", "邮件通道已接通"))
 
     if dry:
         return
