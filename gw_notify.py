@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""广外通知雷达：定时抓取广外各部门通知，有新通知就推送到微信（PushPlus）。
+"""广外通知雷达：定时抓取广外各部门通知，有要紧的新通知就发邮件。
 
 设计原则（手机优先）
 - 重要通知（★）一条一推：微信卡片上直接看到简短标题和截止日期
@@ -10,10 +10,15 @@
   python gw_notify.py            正常运行
   python gw_notify.py --dry-run  只抓取和打印，不推送、不保存
 环境变量
-  PUSHPLUS_TOKEN   PushPlus 的 token（不设就只打印不推送）
+  MAIL_USER   发件QQ邮箱，如 12345@qq.com（不设就只打印不发信）
+  MAIL_PASS   QQ邮箱的SMTP授权码（不是QQ密码）
+  MAIL_TO     收件人，逗号分隔；不设就发给自己
   SITE_URL         手机版页面的网址前缀，默认 https://guoguo5202015.github.io/gw-radar
 """
-import json, os, re, sys, time, html, urllib.request, urllib.parse
+import json, os, re, sys, time, html, smtplib, urllib.request, urllib.parse
+from email.mime.text import MIMEText
+from email.header import Header
+from email.utils import formataddr
 from html.parser import HTMLParser
 from datetime import datetime, timezone, timedelta
 
@@ -40,10 +45,15 @@ SOURCES = [
 HOT = ["先到先得", "额满即止", "名额有限", "截止", "报名", "选拔", "申请", "资助", "奖学金",
        "助学金", "补助", "访学", "交流项目", "交换", "夏令营", "冬令营", "海外", "境外", "新生",
        "2026级", "大一", "竞赛", "大赛", "推免", "保研", "PRIME", "招募"]
+# 只要通知类栏目；新闻、领导活动、辅导员专栏等栏目一律不收（站点前缀, 栏目号）
+NOTICE_COLS = {("nstu", "1056"), ("kjxy", "1107"), ("kjxy", "1470"), ("internationaloffice", "1069"),
+               ("internationaloffice", "1112"), ("jwb", "1044"), ("jwb", "1045"), ("youth", "1050"),
+               ("gwcxcy", "1201")}
+# 结果公示、只对老师或研究生的，不发邮件（网页上照样能查到）
+QUIET = ["公示", "名单", "结果", "研究生", "教师", "教工", "辅导员", "立项", "学籍", "毕业生"]
 NEWSY = ["圆满", "举办", "举行", "召开", "来访", "开展主题", "顺利", "成功", "喜报", "专栏"]
 
-MAX_SINGLE_PUSH = 6       # 一轮最多单独推几条★，其余并进汇总
-PUSH_GAP = 13             # PushPlus 限制每分钟5条
+MAX_MAIL = 8              # 一轮最多发几封，防止意外刷屏
 
 UA = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
                     "(KHTML, like Gecko) Chrome/126.0 Safari/537.36"}
@@ -197,8 +207,14 @@ def fetch_article(url):
 
 
 # ---------- 工具 ----------
+def column(url):
+    m = re.search(r"https?://([a-z0-9]+)\.gdufs\.edu\.cn/info/(\d+)/", url)
+    return m.groups() if m else None
+
+
 def score(title):
-    if any(k in title for k in NEWSY):
+    notice = title.startswith("关于") or "通知" in title  # “关于举办××大赛的通知”是通知，不是新闻稿
+    if any(k in title for k in QUIET) or (not notice and any(k in title for k in NEWSY)):
         return 0
     return sum(1 for k in HOT if k in title)
 
@@ -255,8 +271,8 @@ def render_article(it, art):
 {box}{body}{atts}<h2>原文</h2><p><a href="{esc(it['url'])}">在学校网站打开（电脑版）</a></p></main></body></html>""")
 
 
-def push_html(it, art):
-    """PushPlus 正文：手机上直接可读"""
+def mail_html(it, art):
+    """邮件正文：打开邮件就是全文，不用再点链接"""
     esc = html.escape
     st = "font-size:16px;line-height:1.7;margin:0 0 10px"
     first = (f"截止 {art['deadline']}｜" if art["deadline"] else "") + f"{it['source']} · {it.get('date','')}"
@@ -264,29 +280,38 @@ def push_html(it, art):
     if art["keys"]:
         parts.append("<div style='background:#f3ece4;border-radius:8px;padding:10px 12px;margin:0 0 14px'>" +
                      "".join(f"<div style='font-size:15px;margin:3px 0'>· {esc(k)}</div>" for k in art["keys"]) + "</div>")
-    total = 0
+    parts.append(f"<h2 style='font-size:19px;line-height:1.45;margin:0 0 12px'>{esc(it['title'])}</h2>")
     for x in art["paras"]:
-        if total > 3500:
-            parts.append(f"<p style='{st};color:#888'>……全文较长，点下面链接看完整版</p>")
-            break
         parts.append(f"<p style='{st}'>{esc(x)}</p>")
-        total += len(x)
     for n, u in art["atts"]:
         parts.append(f"<p style='{st}'><a href='{esc(u)}'>📎 {esc(n)}</a></p>")
-    parts.append(f"<p style='{st}'><a href='{page_url(it)}'>手机版全文</a>　<a href='{esc(it['url'])}'>学校原网页</a></p>")
+    parts.append(f"<p style='{st}'><a href='{esc(it['url'])}' style='color:#888;font-size:13px'>学校原网页</a></p>")
     return "".join(parts)
 
 
-def push(title, content_html):
-    token = os.environ.get("PUSHPLUS_TOKEN", "").strip()
-    if not token:
-        print("[未设置 PUSHPLUS_TOKEN，跳过推送]", title)
+def send_mail(subject, content_html):
+    user = os.environ.get("MAIL_USER", "").strip()
+    pwd = os.environ.get("MAIL_PASS", "").strip()
+    if not (user and pwd):
+        print("[未设置 MAIL_USER/MAIL_PASS，跳过发信]", subject)
         return
-    data = json.dumps({"token": token, "title": title, "content": content_html, "template": "html"}).encode()
-    req = urllib.request.Request("https://www.pushplus.plus/send", data=data,
-                                 headers={"Content-Type": "application/json"})
-    with urllib.request.urlopen(req, timeout=20) as r:
-        print("推送结果", r.read().decode()[:200])
+    to = [x.strip() for x in os.environ.get("MAIL_TO", "").split(",") if x.strip()] or [user]
+    doc = ("<div style='max-width:640px;margin:0 auto;font-family:-apple-system,PingFang SC,Microsoft YaHei,sans-serif;"
+           "color:#1d1d1b'>" + content_html + "</div>")
+    msg = MIMEText(doc, "html", "utf-8")
+    msg["Subject"] = Header(subject, "utf-8")
+    msg["From"] = formataddr((str(Header("广外通知雷达", "utf-8")), user))
+    msg["To"] = ", ".join(to)
+    for i in range(3):
+        try:
+            with smtplib.SMTP_SSL("smtp.qq.com", 465, timeout=30) as s:
+                s.login(user, pwd)
+                s.sendmail(user, to, msg.as_string())
+            print("已发信", subject)
+            return
+        except Exception as e:
+            print("[发信失败，重试]", e)
+            time.sleep(5)
 
 
 def render_index(st):
@@ -350,7 +375,7 @@ def main():
             continue
         print(f"[ok] {name} {len(items)} 条")
         for it in items:
-            if it["url"] in st["items"]:
+            if it["url"] in st["items"] or column(it["url"]) not in NOTICE_COLS:
                 continue
             it.update(source=name, found=now, score=score(it["title"]))
             st["items"][it["url"]] = it
@@ -380,23 +405,13 @@ def main():
         print(("★ " if it["score"] else "  ") + f"{it['date']} [{it['source']}] {it['title']}  截止:{a.get('deadline','')}")
 
     if new and not first and not dry:
-        hot = [x for x in new if x["score"] and x["url"] in arts][:MAX_SINGLE_PUSH]
-        rest = [x for x in new if x not in hot]
-        for i, it in enumerate(hot):
-            if i:
-                time.sleep(PUSH_GAP)
+        hot = [x for x in new if x["score"] and x["url"] in arts][:MAX_MAIL]
+        for it in hot:
             art = arts[it["url"]]
             md = re.match(r"(\d{1,2})月(\d{1,2})日", art["deadline"] or "")
-            title = "★" + (f"{md.group(1)}/{md.group(2)}截止｜" if md else "") + short_title(it["title"], 16 if md else 22)
-            push(title, push_html(it, art))
-        if rest:
-            if hot:
-                time.sleep(PUSH_GAP)
-            body = "".join(
-                f"<p style='font-size:16px;line-height:1.6;margin:0 0 12px'><a href='{page_url(x) if has_page(x) else x['url']}'>"
-                f"{html.escape(x['title'])}</a><br><span style='font-size:13px;color:#888'>{html.escape(x['source'])} · {x['date']}</span></p>"
-                for x in rest[:25])
-            push(f"其他新通知 {len(rest)} 条", f"<p style='font-size:13px;color:#888'>{html.escape(rest[0]['source'])} 等</p>" + body)
+            subject = (f"【{md.group(1)}/{md.group(2)}截止】" if md else "") + short_title(it["title"], 40)
+            send_mail(subject, mail_html(it, art))
+            time.sleep(3)
 
     if dry:
         return
