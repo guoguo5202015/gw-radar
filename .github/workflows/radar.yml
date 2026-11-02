@@ -24,7 +24,9 @@ jobs:
           python-version: "3.12"
       - name: 抓取并推送
         env:
-          PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
+          MAIL_USER: ${{ secrets.MAIL_USER }}
+          MAIL_PASS: ${{ secrets.MAIL_PASS }}
+          MAIL_TO: ${{ secrets.MAIL_TO }}
         run: python gw_notify.py
       - name: 保存记录和网页
         run: |
