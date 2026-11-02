@@ -191,6 +191,9 @@ def fetch_article(url):
         if u not in seen and not name.lower().endswith((".jpg", ".png", ".jpeg", ".gif")):
             seen.add(u)
             atts.append([name, u])
+    pdf = re.search(r'showVsbpdfIframe\("([^"]+)"', page)  # 有的通知正文是嵌在页面里的PDF
+    if pdf:
+        atts.insert(0, ["通知正文（PDF）", urllib.parse.urljoin(url, html.unescape(pdf.group(1)))])
     text = " ".join(paras)
     keys = [x for x in paras if RANGE_RE.search(x) and re.search(r"报名|提交|申请", x) and len(x) < 160][:2]
     for sent in re.split(r"[。；;！!]", text):
@@ -271,22 +274,172 @@ def render_article(it, art):
 {box}{body}{atts}<h2>原文</h2><p><a href="{esc(it['url'])}">在学校网站打开（电脑版）</a></p></main></body></html>""")
 
 
+# 不带引号的写法也是合法 CSS，放进 style='…' 里不会把属性截断
+SERIF = "Noto Serif SC,Source Han Serif SC,Songti SC,STSong,SimSun,serif"
+SANS = "-apple-system,BlinkMacSystemFont,PingFang SC,MiSans,HarmonyOS Sans SC,Microsoft YaHei,sans-serif"
+INK, BODY, MUTE, LINE, ACC, PAPER = "#1c1a17", "#3b3732", "#9a9185", "#ebe5da", "#a8321f", "#f4f0e8"
+EMAIL_RE = re.compile(r"[\w.+-]+@[\w-]+\.[\w.]+")
+
+
+def _clauses(paras):
+    text = "。".join(paras)
+    return [c.strip(" ｜，,") for c in re.split(r"[。；;！!\n]", text) if c.strip(" ｜，,")]
+
+
+def _clip(s, key, n=80):
+    """长句按逗号切开，只留关键词所在的那一截和它前面一截"""
+    if len(s) <= n:
+        return s
+    segs = re.split(r"(?<=[，,])", s)
+    j = next((k for k, x in enumerate(segs) if key in x), 0)
+    for lo in (j - 1, j):
+        part = "".join(segs[max(lo, 0):j + 1]).strip("，, ")
+        if len(part) <= n:
+            return ("…" if lo > 0 else "") + part + ("…" if j + 1 < len(segs) else "")
+    return segs[j][:n] + "…"
+
+
+def deadline_info(it, art):
+    """返回 (大字日期, 补充说明, 还剩几天) ；没有截止日期返回 None"""
+    dl = art.get("deadline") or ""
+    m = re.match(r"(\d{1,2})月(\d{1,2})日", dl)
+    if not m:
+        return None
+    mon, day = int(m.group(1)), int(m.group(2))
+    base = (it.get("date") or datetime.now(CST).strftime("%Y-%m-%d"))
+    year = int(base[:4]) + (1 if mon < int(base[5:7]) - 6 else 0)
+    today = datetime.now(CST).date()
+    try:
+        left = (datetime(year, mon, day, tzinfo=CST).date() - today).days
+    except ValueError:
+        left = None
+    text = "。".join(art["paras"])
+    i = text.find(m.group(0))
+    tail = text[i + len(m.group(0)): i + len(m.group(0)) + 14] if i >= 0 else ""
+    t = re.match(r"\s*(?:[（(][^）)]{1,4}[）)])?\s*((?:上午|中午|下午|晚上)?\s*\d{1,2}(?:[:：]\d{2}|点|时)(?:\d{1,2}分)?)", tail)
+    clock = t.group(1).replace("：", ":").replace(" ", "") if t else ""
+    if not clock:
+        c2 = re.search(r"\d{1,2}[:：]\d{2}", dl)
+        clock = c2.group(0).replace("：", ":") if c2 else ""
+    return f"{mon}月{day}日", clock, left
+
+
+def key_rows(it, art):
+    """从正文里挑出几条要点：怎么交、谁能报、名额、时间、联系"""
+    rows, used = [], set()
+    cl = _clauses(art["paras"])
+    rules = [
+        ("怎么交", r"邮箱|发送至|发至|报送|提交|系统|链接|二维码", 1),
+        ("谁能报", r"对象|面向|条件|要求.{0,6}(学生|本科)|全日制", 0),
+        ("名额", r"名额|人数|限额|额满", 0),
+        ("时间", r"报名时间|申请时间|活动时间|举办时间|宣讲", 0),
+        ("联系", r"联系人|联系电话|咨询|电话", 0),
+    ]
+    for label, pat, want_mail in rules:
+        best = None
+        for c in cl:
+            mm = re.search(pat, c)
+            if not mm or c in used or len(c) < 12:
+                continue
+            if want_mail and EMAIL_RE.search(c):
+                best = c
+                break
+            best = best or c
+        if best:
+            used.add(best)
+            key = (EMAIL_RE.search(best) or re.search(pat, best)).group(0)
+            rows.append((label, _clip(best, key)))
+    return rows[:4]
+
+
+def _body_html(paras):
+    out = []
+    n = len(paras)
+    for i, x in enumerate(paras):
+        e = html.escape(x)
+        e = EMAIL_RE.sub(lambda m: f"<a href='mailto:{m.group(0)}' style='color:{ACC};text-decoration:none'>{m.group(0)}</a>", e)
+        e = re.sub(r"(\d{1,2}月\d{1,2}日[^，。；]{0,12}?(?:前|之前|截止))",
+                   rf"<span style='color:{ACC};font-weight:600'>\1</span>", e)
+        tail = i >= n - 3 and len(x) < 30 and not re.search(r"[，。]", x)
+        if re.match(r"^([一二三四五六七八九十]+、|（[一二三四五六七八九十]+）|\d+[.、．]\s*\S{2,12}$)", x) and len(x) < 40:
+            out.append(f"<p style='margin:22px 0 8px;font-size:16px;font-weight:600;color:{INK}'>{e}</p>")
+        elif tail:
+            out.append(f"<p style='margin:0;font-size:14px;color:{MUTE};text-align:right'>{e}</p>")
+        elif i == 0 and x.endswith(("：", ":")) and len(x) < 20:
+            out.append(f"<p style='margin:0 0 12px;font-size:15px;color:{MUTE}'>{e}</p>")
+        else:
+            out.append(f"<p style='margin:0 0 14px;font-size:16px;line-height:1.85;color:{BODY};text-align:justify'>{e}</p>")
+    return "".join(out)
+
+
+def mail_shell(inner, preheader=""):
+    return f"""<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light"></head>
+<body style="margin:0;padding:0;background:{PAPER};font-family:{SANS};-webkit-text-size-adjust:100%">
+<div style="display:none;max-height:0;overflow:hidden;opacity:0">{html.escape(preheader)}</div>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:{PAPER}"><tr><td align="center" style="padding:20px 10px 32px">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;background:#ffffff;border-radius:16px;border:1px solid {LINE}">
+<tr><td style="padding:26px 24px 30px">{inner}</td></tr></table>
+<p style="margin:16px 0 0;font-size:12px;color:{MUTE};letter-spacing:1px">广外通知雷达 · 自动发送</p>
+</td></tr></table></body></html>"""
+
+
 def mail_html(it, art):
-    """邮件正文：打开邮件就是全文，不用再点链接"""
+    """邮件正文：最上面是截止和要点，下面是排好版的全文"""
     esc = html.escape
-    st = "font-size:16px;line-height:1.7;margin:0 0 10px"
-    first = (f"截止 {art['deadline']}｜" if art["deadline"] else "") + f"{it['source']} · {it.get('date','')}"
-    parts = [f"<p style='{st};color:#888;font-size:13px'>{esc(first)}</p>"]
-    if art["keys"]:
-        parts.append("<div style='background:#f3ece4;border-radius:8px;padding:10px 12px;margin:0 0 14px'>" +
-                     "".join(f"<div style='font-size:15px;margin:3px 0'>· {esc(k)}</div>" for k in art["keys"]) + "</div>")
-    parts.append(f"<h2 style='font-size:19px;line-height:1.45;margin:0 0 12px'>{esc(it['title'])}</h2>")
-    for x in art["paras"]:
-        parts.append(f"<p style='{st}'>{esc(x)}</p>")
-    for n, u in art["atts"]:
-        parts.append(f"<p style='{st}'><a href='{esc(u)}'>📎 {esc(n)}</a></p>")
-    parts.append(f"<p style='{st}'><a href='{esc(it['url'])}' style='color:#888;font-size:13px'>学校原网页</a></p>")
-    return "".join(parts)
+    meta = f"{esc(it['source'])}<span style='color:{LINE}'>　｜　</span>{esc(it.get('date') or '')}"
+    parts = [f"<div style='font-size:12px;letter-spacing:2px;color:{MUTE};margin-bottom:14px'>{meta}</div>",
+             f"<h1 style='margin:0 0 20px;font-family:{SERIF};font-size:23px;line-height:1.45;font-weight:700;color:{INK}'>"
+             f"{esc(short_title(it['title'], 60))}</h1>"]
+    dli = deadline_info(it, art)
+    pre = ""
+    if dli:
+        day, clock, left = dli
+        if left is not None and left < 0:
+            chip, cc = "已截止", MUTE
+        elif left is not None:
+            chip = "今天截止" if left == 0 else f"还剩 {left} 天"
+            cc = ACC if left <= 3 else "#8a6d3b"
+        else:
+            chip, cc = "", MUTE
+        chip_html = (f"<span style='display:inline-block;margin-left:10px;padding:3px 10px;border-radius:99px;"
+                     f"font-family:{SANS};font-size:13px;font-weight:600;color:#fff;background:{cc};vertical-align:middle'>{chip}</span>") if chip else ""
+        parts.append(
+            f"<table role='presentation' width='100%' cellpadding='0' cellspacing='0' style='margin:0 0 18px;background:#fbf3ee;border-radius:12px'>"
+            f"<tr><td style='padding:16px 18px;border-left:4px solid {ACC};border-radius:12px'>"
+            f"<div style='font-size:12px;letter-spacing:2px;color:{ACC};margin-bottom:4px'>截止</div>"
+            f"<div style='font-family:{SERIF};font-size:28px;line-height:1.3;font-weight:700;color:{INK}'>{day}"
+            f"<span style='font-size:18px;font-weight:600;margin-left:6px'>{esc(clock)}</span>{chip_html}</div></td></tr></table>")
+        pre = f"截止{day}{clock}"
+    rows = key_rows(it, art)
+    if rows:
+        tr = "".join(
+            f"<tr><td valign='top' style='width:56px;padding:9px 0;font-size:13px;color:{MUTE};border-top:1px solid {LINE};white-space:nowrap'>{esc(l)}</td>"
+            f"<td style='padding:9px 0;font-size:15px;line-height:1.65;color:{INK};border-top:1px solid {LINE}'>"
+            + EMAIL_RE.sub(lambda m: f"<a href='mailto:{m.group(0)}' style='color:{ACC};text-decoration:none'>{m.group(0)}</a>", esc(v))
+            + "</td></tr>" for l, v in rows)
+        parts.append(f"<table role='presentation' width='100%' cellpadding='0' cellspacing='0' style='margin:0 0 18px;border-bottom:1px solid {LINE}'>{tr}</table>")
+        pre += " · " + rows[0][1][:40]
+    if art["atts"]:
+        a = "".join(
+            f"<a href='{esc(u)}' style='display:block;margin:0 0 8px;padding:11px 14px;border:1px solid {LINE};border-radius:10px;"
+            f"font-size:14px;color:{INK};text-decoration:none;word-break:break-all'><span style='color:{ACC};font-weight:600'>↓</span>　{esc(n)}</a>"
+            for n, u in art["atts"])
+        parts.append(f"<div style='font-size:12px;letter-spacing:2px;color:{MUTE};margin:4px 0 10px'>附件 {len(art['atts'])}</div>{a}")
+    parts.append(f"<div style='margin:26px 0 16px;text-align:center;font-size:12px;letter-spacing:4px;color:{MUTE}'>— 原文 —</div>")
+    parts.append(_body_html(art["paras"]) or f"<p style='font-size:15px;color:{MUTE};text-align:center'>这条通知的正文是PDF或图片，点上面的附件或下面的原网页查看。</p>")
+    parts.append(f"<div style='margin-top:26px;padding-top:16px;border-top:1px solid {LINE};text-align:center'>"
+                 f"<a href='{esc(it['url'])}' style='font-size:13px;color:{MUTE};text-decoration:none'>在学校网站查看原文 →</a></div>")
+    return mail_shell("".join(parts), pre or it["source"])
+
+
+def mail_subject(it, art):
+    dli = deadline_info(it, art)
+    head = ""
+    if dli and (dli[2] is None or dli[2] >= 0):
+        m = re.match(r"(\d+)月(\d+)日", dli[0])
+        head = f"【{m.group(1)}/{m.group(2)}截止】"
+    return head + short_title(it["title"], 40)
 
 
 def send_mail(subject, content_html):
@@ -296,9 +449,7 @@ def send_mail(subject, content_html):
         print("[未设置 MAIL_USER/MAIL_PASS，跳过发信]", subject)
         return
     to = [x.strip() for x in os.environ.get("MAIL_TO", "").split(",") if x.strip()] or [user]
-    doc = ("<div style='max-width:640px;margin:0 auto;font-family:-apple-system,PingFang SC,Microsoft YaHei,sans-serif;"
-           "color:#1d1d1b'>" + content_html + "</div>")
-    msg = MIMEText(doc, "html", "utf-8")
+    msg = MIMEText(content_html, "html", "utf-8")
     msg["Subject"] = Header(subject, "utf-8")
     msg["From"] = formataddr((str(Header("广外通知雷达", "utf-8")), user))
     msg["To"] = ", ".join(to)
@@ -409,20 +560,24 @@ def main():
         hot = [x for x in new if x["score"] and x["url"] in arts][:MAX_MAIL]
         for it in hot:
             art = arts[it["url"]]
-            md = re.match(r"(\d{1,2})月(\d{1,2})日", art["deadline"] or "")
-            subject = (f"【{md.group(1)}/{md.group(2)}截止】" if md else "") + short_title(it["title"], 40)
-            send_mail(subject, mail_html(it, art))
+            send_mail(mail_subject(it, art), mail_html(it, art))
             time.sleep(3)
 
     # 在网页上手动点 Run workflow 时，发一封测试邮件，确认邮箱通道是通的
     if os.environ.get("GITHUB_EVENT_NAME") == "workflow_dispatch" and not dry:
         recent = sorted((x for x in st["items"].values() if x.get("score")),
                         key=lambda x: x.get("date") or "", reverse=True)[:5]
-        body = ("<p style='font-size:16px;line-height:1.7'>收到这封邮件，说明邮件通道是通的。以后有要你动手的新通知"
-                "（报名、选拔、竞赛、申请），会一条一封发到这里。</p><p style='font-size:15px;color:#888'>最近几条重要通知</p>" +
-                "".join(f"<p style='font-size:15px;line-height:1.6;margin:0 0 8px'>{html.escape(x['title'])}"
-                        f"<br><span style='color:#888;font-size:13px'>{html.escape(x['source'])} · {x.get('date','')}</span></p>"
-                        for x in recent))
+        li = "".join(
+            f"<tr><td style='padding:12px 0;border-top:1px solid {LINE}'><div style='font-size:15px;line-height:1.6;color:{INK}'>"
+            f"{html.escape(x['title'])}</div><div style='font-size:12px;color:{MUTE};margin-top:3px'>{html.escape(x['source'])} · "
+            f"{x.get('date','')}</div></td></tr>" for x in recent)
+        body = mail_shell(
+            f"<div style='font-size:12px;letter-spacing:2px;color:{MUTE};margin-bottom:14px'>测试</div>"
+            f"<h1 style='margin:0 0 14px;font-family:{SERIF};font-size:23px;line-height:1.45;color:{INK}'>邮件通道已接通</h1>"
+            f"<p style='margin:0 0 22px;font-size:16px;line-height:1.85;color:{BODY}'>以后有要你动手的新通知，报名、选拔、竞赛、申请，"
+            f"会一条一封发到这里。新闻稿和公示名单不会再发。</p>"
+            f"<div style='font-size:12px;letter-spacing:2px;color:{MUTE};margin-bottom:4px'>最近的重要通知</div>"
+            f"<table role='presentation' width='100%' cellpadding='0' cellspacing='0'>{li}</table>", "邮件通道已接通")
         send_mail("广外通知雷达 测试邮件", body)
 
     if dry:
