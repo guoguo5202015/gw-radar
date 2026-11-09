@@ -1364,6 +1364,36 @@
    "score": 0,
    "deadline": "",
    "page": true
+  },
+  "https://nstu.gdufs.edu.cn/info/1056/69001.htm": {
+   "title": "关于查收2026年10月学生临时困难补助的通知",
+   "url": "https://nstu.gdufs.edu.cn/info/1056/69001.htm",
+   "date": "2026-11-02",
+   "source": "学生工作部",
+   "found": "2026-11-09T18:05+08:00",
+   "score": 1,
+   "deadline": "11月15日",
+   "page": true
+  },
+  "https://nstu.gdufs.edu.cn/info/1056/69021.htm": {
+   "title": "关于2026年硕士研究生比亚迪奖学金拟获奖名单的公示",
+   "url": "https://nstu.gdufs.edu.cn/info/1056/69021.htm",
+   "date": "2026-10-30",
+   "source": "学生工作部",
+   "found": "2026-11-09T18:05+08:00",
+   "score": 0,
+   "deadline": "",
+   "page": true
+  },
+  "https://youth.gdufs.edu.cn/info/1050/13092.htm": {
+   "title": "关于开展2026广州马拉松赛志愿者招募工作的通知",
+   "url": "https://youth.gdufs.edu.cn/info/1050/13092.htm",
+   "date": "2026-10-29",
+   "source": "校团委",
+   "found": "2026-11-09T18:05+08:00",
+   "score": 1,
+   "deadline": "11月10日",
+   "page": true
   }
  },
  "initialized": true
