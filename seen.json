@@ -1622,12 +1622,12 @@
    "category": "jhsxm",
    "found": "2026-11-11T20:40+08:00",
    "score": 110,
-   "pending_hash": "f4ff32611b891ccdf070a7756104043f7888186b872639a4a447bc1e2407cba3",
-   "pending_reason": "backfill",
    "content_hash": "f4ff32611b891ccdf070a7756104043f7888186b872639a4a447bc1e2407cba3",
    "deadline": "",
    "deadline_iso": "",
-   "page": true
+   "page": true,
+   "delivered_hash": "f4ff32611b891ccdf070a7756104043f7888186b872639a4a447bc1e2407cba3",
+   "delivered_at": "2026-11-11T22:58+08:00"
   },
   "https://internationaloffice.gdufs.edu.cn/info/1012/16889.htm": {
    "title": "【春季27SJH012】关于2026-2027-2学期赴土耳其伊斯坦布尔文化大学交换生项目选拔的通知",
@@ -1638,12 +1638,12 @@
    "category": "jhsxm",
    "found": "2026-11-11T20:40+08:00",
    "score": 110,
-   "pending_hash": "6de36f24095a12fad0525c312ac77ebd6e9d674a347ea9d9b98c32c761547833",
-   "pending_reason": "backfill",
    "content_hash": "6de36f24095a12fad0525c312ac77ebd6e9d674a347ea9d9b98c32c761547833",
    "deadline": "",
    "deadline_iso": "",
-   "page": true
+   "page": true,
+   "delivered_hash": "6de36f24095a12fad0525c312ac77ebd6e9d674a347ea9d9b98c32c761547833",
+   "delivered_at": "2026-11-11T22:58+08:00"
   },
   "https://internationaloffice.gdufs.edu.cn/info/1012/16859.htm": {
    "title": "【春季27SJH011】关于2026-2027-2学期赴意大利都灵大学交换生项目选拔的通知",
@@ -1654,12 +1654,12 @@
    "category": "jhsxm",
    "found": "2026-11-11T20:40+08:00",
    "score": 110,
-   "pending_hash": "e9ed36067f1570f5a6f56ce1cde8c5a5335d8ca82861632e26561328803f5436",
-   "pending_reason": "backfill",
    "content_hash": "e9ed36067f1570f5a6f56ce1cde8c5a5335d8ca82861632e26561328803f5436",
    "deadline": "",
    "deadline_iso": "",
-   "page": true
+   "page": true,
+   "delivered_hash": "e9ed36067f1570f5a6f56ce1cde8c5a5335d8ca82861632e26561328803f5436",
+   "delivered_at": "2026-11-11T22:58+08:00"
   },
   "https://internationaloffice.gdufs.edu.cn/info/1012/16849.htm": {
    "title": "【春季27SJH010】关于2026-2027-2学期赴波兰哥白尼大学交换生项目选拔的通知",
@@ -1670,12 +1670,12 @@
    "category": "jhsxm",
    "found": "2026-11-11T20:40+08:00",
    "score": 110,
-   "pending_hash": "91430884714c65ef4f58a6dc7e1569e1a4adfe6177f7ec2b8145f33963046cf3",
-   "pending_reason": "backfill",
    "content_hash": "91430884714c65ef4f58a6dc7e1569e1a4adfe6177f7ec2b8145f33963046cf3",
    "deadline": "",
    "deadline_iso": "",
-   "page": true
+   "page": true,
+   "delivered_hash": "91430884714c65ef4f58a6dc7e1569e1a4adfe6177f7ec2b8145f33963046cf3",
+   "delivered_at": "2026-11-11T22:58+08:00"
   },
   "https://internationaloffice.gdufs.edu.cn/info/1012/16819.htm": {
    "title": "【春季27SJH004公示】关于2026-2027-2学期赴英国兰开夏大学交换生项目的拟推荐名单的公示",
@@ -1968,12 +1968,12 @@
    "category": "dxpcxm",
    "found": "2026-11-11T20:40+08:00",
    "score": 110,
-   "pending_hash": "f9612180289350ee662bc7f5bc92768e516f01c83927bee942b9c07a14fd4d4d",
-   "pending_reason": "backfill",
    "content_hash": "f9612180289350ee662bc7f5bc92768e516f01c83927bee942b9c07a14fd4d4d",
    "deadline": "",
    "deadline_iso": "",
-   "page": true
+   "page": true,
+   "delivered_hash": "f9612180289350ee662bc7f5bc92768e516f01c83927bee942b9c07a14fd4d4d",
+   "delivered_at": "2026-11-11T22:58+08:00"
   },
   "https://internationaloffice.gdufs.edu.cn/info/1013/16729.htm": {
    "title": "【春季27SDX012】关于2026-2027-2学期赴英国爱丁堡大学交流生项目选拔的通知",
@@ -3208,12 +3208,12 @@
    "category": "hsqxm",
    "found": "2026-11-11T20:40+08:00",
    "score": 100,
-   "pending_hash": "e13bf7f35d5f6f9f2a78d58fa2587adcb3f425c9786ddde09d2925087b057853",
-   "pending_reason": "backfill",
    "content_hash": "e13bf7f35d5f6f9f2a78d58fa2587adcb3f425c9786ddde09d2925087b057853",
    "deadline": "",
    "deadline_iso": "",
-   "page": true
+   "page": true,
+   "delivered_hash": "e13bf7f35d5f6f9f2a78d58fa2587adcb3f425c9786ddde09d2925087b057853",
+   "delivered_at": "2026-11-11T22:58+08:00"
   },
   "https://internationaloffice.gdufs.edu.cn/info/1061/16929.htm": {
    "title": "【寒假2027XHJ045】2027年寒假剑桥RBL学术实践冬校项目",
@@ -3224,12 +3224,12 @@
    "category": "hsqxm",
    "found": "2026-11-11T20:40+08:00",
    "score": 100,
-   "pending_hash": "93b1c175013a2231d21d8a4f285ebfd0d4b5ac07592f996d902772fa1f44a442",
-   "pending_reason": "backfill",
    "content_hash": "93b1c175013a2231d21d8a4f285ebfd0d4b5ac07592f996d902772fa1f44a442",
    "deadline": "",
    "deadline_iso": "",
-   "page": true
+   "page": true,
+   "delivered_hash": "93b1c175013a2231d21d8a4f285ebfd0d4b5ac07592f996d902772fa1f44a442",
+   "delivered_at": "2026-11-11T22:58+08:00"
   },
   "https://internationaloffice.gdufs.edu.cn/info/1061/16709.htm": {
    "title": "【寒假2027XHJ044】\"AI 时代下的青年机遇\" 2026 年中国-韩国大学生论坛",
@@ -4047,97 +4047,97 @@
  "initialized": true,
  "source_health": {
   "https://internationaloffice.gdufs.edu.cn/gjxm/ztqk.htm": {
-   "checked_at": "2026-11-11T20:40+08:00",
+   "checked_at": "2026-11-11T22:57+08:00",
    "items": 5,
    "errors": []
   },
   "https://internationaloffice.gdufs.edu.cn/gjxm/jhsxm.htm": {
-   "checked_at": "2026-11-11T20:40+08:00",
+   "checked_at": "2026-11-11T22:57+08:00",
    "items": 30,
    "errors": []
   },
   "https://internationaloffice.gdufs.edu.cn/gjxm/dxpcxm.htm": {
-   "checked_at": "2026-11-11T20:40+08:00",
+   "checked_at": "2026-11-11T22:57+08:00",
    "items": 30,
    "errors": []
   },
   "https://internationaloffice.gdufs.edu.cn/gjxm/sxwxm.htm": {
-   "checked_at": "2026-11-11T20:40+08:00",
+   "checked_at": "2026-11-11T22:57+08:00",
    "items": 30,
    "errors": []
   },
   "https://internationaloffice.gdufs.edu.cn/gjxm/ljwxm.htm": {
-   "checked_at": "2026-11-11T20:40+08:00",
+   "checked_at": "2026-11-11T22:57+08:00",
    "items": 30,
    "errors": []
   },
   "https://internationaloffice.gdufs.edu.cn/gjxm/hsqxm.htm": {
-   "checked_at": "2026-11-11T20:40+08:00",
+   "checked_at": "2026-11-11T22:57+08:00",
    "items": 30,
    "errors": []
   },
   "https://internationaloffice.gdufs.edu.cn/gjxm/hzbx.htm": {
-   "checked_at": "2026-11-11T20:40+08:00",
+   "checked_at": "2026-11-11T22:57+08:00",
    "items": 2,
    "errors": []
   },
   "https://internationaloffice.gdufs.edu.cn/gjxm/fxjw.htm": {
-   "checked_at": "2026-11-11T20:40+08:00",
+   "checked_at": "2026-11-11T22:57+08:00",
    "items": 30,
    "errors": []
   },
   "https://nstu.gdufs.edu.cn/": {
-   "checked_at": "2026-11-11T20:40+08:00",
+   "checked_at": "2026-11-11T22:57+08:00",
    "items": 22,
    "errors": []
   },
   "https://kjxy.gdufs.edu.cn/xsgz/xsdt.htm": {
-   "checked_at": "2026-11-11T20:40+08:00",
+   "checked_at": "2026-11-11T22:57+08:00",
    "items": 5,
    "errors": []
   },
   "https://kjxy.gdufs.edu.cn/gjjl/jlxm.htm": {
-   "checked_at": "2026-11-11T20:40+08:00",
+   "checked_at": "2026-11-11T22:57+08:00",
    "items": 5,
    "errors": []
   },
   "https://kjxy.gdufs.edu.cn/": {
-   "checked_at": "2026-11-11T20:40+08:00",
+   "checked_at": "2026-11-11T22:57+08:00",
    "items": 13,
    "errors": []
   },
   "https://internationaloffice.gdufs.edu.cn/tzgg1/gjxm.htm": {
-   "checked_at": "2026-11-11T20:40+08:00",
+   "checked_at": "2026-11-11T22:57+08:00",
    "items": 2,
    "errors": []
   },
   "https://internationaloffice.gdufs.edu.cn/gs/gjxm.htm": {
-   "checked_at": "2026-11-11T20:40+08:00",
+   "checked_at": "2026-11-11T22:57+08:00",
    "items": 1,
    "errors": []
   },
   "https://internationaloffice.gdufs.edu.cn/": {
-   "checked_at": "2026-11-11T20:40+08:00",
+   "checked_at": "2026-11-11T22:57+08:00",
    "items": 25,
    "errors": []
   },
   "https://jwb.gdufs.edu.cn/xwtz/tz.htm": {
-   "checked_at": "2026-11-11T20:40+08:00",
+   "checked_at": "2026-11-11T22:57+08:00",
    "items": 4,
    "errors": []
   },
   "https://jwb.gdufs.edu.cn/xwtz/jxtz.htm": {
-   "checked_at": "2026-11-11T20:40+08:00",
+   "checked_at": "2026-11-11T22:57+08:00",
    "items": 5,
    "errors": []
   },
   "https://youth.gdufs.edu.cn/": {
-   "checked_at": "2026-11-11T20:40+08:00",
+   "checked_at": "2026-11-11T22:57+08:00",
    "items": 9,
    "errors": []
   },
   "https://gwcxcy.gdufs.edu.cn/": {
-   "checked_at": "2026-11-11T20:40+08:00",
+   "checked_at": "2026-11-11T22:57+08:00",
    "items": 19,
    "errors": []
   }
