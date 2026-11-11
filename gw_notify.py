@@ -16,6 +16,9 @@
   SITE_URL         手机版页面的网址前缀，默认 https://guoguo5202015.github.io/gw-radar
 """
 import json, os, re, sys, time, html, smtplib, urllib.request, urllib.parse
+from concurrent.futures import ThreadPoolExecutor
+import international
+from article_details import enrich_article
 from email.mime.text import MIMEText
 from email.header import Header
 from email.utils import formataddr
@@ -28,7 +31,7 @@ DOCS = os.path.join(HERE, "docs")
 SITE_URL = os.environ.get("SITE_URL", "https://guoguo5202015.github.io/gw-radar").rstrip("/")
 CST = timezone(timedelta(hours=8))
 
-SOURCES = [
+SOURCES = international.SOURCES + [
     ("学生工作部", "https://nstu.gdufs.edu.cn/"),
     ("会计学院·学生工作", "https://kjxy.gdufs.edu.cn/xsgz/xsdt.htm"),
     ("会计学院·国际交流", "https://kjxy.gdufs.edu.cn/gjjl/jlxm.htm"),
@@ -301,6 +304,10 @@ def _clip(s, key, n=80):
 
 def deadline_info(it, art):
     """返回 (大字日期, 补充说明, 还剩几天) ；没有截止日期返回 None"""
+    if art.get("deadline_iso"):
+        date = datetime.strptime(art["deadline_iso"], "%Y-%m-%d").date()
+        left = (date - datetime.now(CST).date()).days
+        return f"{date.month}月{date.day}日", art.get("deadline_time", ""), left
     dl = art.get("deadline") or ""
     m = re.match(r"(\d{1,2})月(\d{1,2})日", dl)
     if not m:
@@ -391,6 +398,13 @@ def mail_html(it, art):
     parts = [f"<div style='font-size:12px;letter-spacing:2px;color:{MUTE};margin-bottom:14px'>{meta}</div>",
              f"<h1 style='margin:0 0 20px;font-family:{SERIF};font-size:23px;line-height:1.45;font-weight:700;color:{INK}'>"
              f"{esc(short_title(it['title'], 60))}</h1>"]
+    if it.get("priority"):
+        label = "国际项目 · 重点关注"
+        if it.get("pending_reason") == "updated":
+            label += " · 原通知有更新，请重新核对条件和附件"
+        elif it.get("pending_reason") == "backfill":
+            label += " · 近期项目补收录，请核对是否仍开放报名"
+        parts.insert(0, f"<p style='color:{ACC};font-size:13px;font-weight:600'>{label}</p>")
     dli = deadline_info(it, art)
     pre = ""
     if dli:
@@ -411,6 +425,10 @@ def mail_html(it, art):
             f"<div style='font-family:{SERIF};font-size:28px;line-height:1.3;font-weight:700;color:{INK}'>{day}"
             f"<span style='font-size:18px;font-weight:600;margin-left:6px'>{esc(clock)}</span>{chip_html}</div></td></tr></table>")
         pre = f"截止{day}{clock}"
+        if art.get("deadline_context"):
+            parts.append(f"<p style='font-size:13px;color:{BODY}'>截止依据：{esc(art['deadline_context'])}</p>")
+    if art.get("attachment_note"):
+        parts.append(f"<p style='font-size:14px;color:{ACC}'>{esc(art['attachment_note'])}</p>")
     rows = key_rows(it, art)
     if rows:
         tr = "".join(
@@ -439,7 +457,8 @@ def mail_subject(it, art):
     if dli and (dli[2] is None or dli[2] >= 0):
         m = re.match(r"(\d+)月(\d+)日", dli[0])
         head = f"【{m.group(1)}/{m.group(2)}截止】"
-    return head + short_title(it["title"], 40)
+    topic = "【国际项目更新】" if it.get("pending_reason") == "updated" else "【国际项目】"
+    return (topic if it.get("priority") else "") + head + short_title(it["title"], 55 if it.get("priority") else 40)
 
 
 def send_mail(subject, content_html):
@@ -447,7 +466,7 @@ def send_mail(subject, content_html):
     pwd = os.environ.get("MAIL_PASS", "").strip()
     if not (user and pwd):
         print("[未设置 MAIL_USER/MAIL_PASS，跳过发信]", subject)
-        return
+        return False
     to = [x.strip() for x in os.environ.get("MAIL_TO", "").split(",") if x.strip()] or [user]
     msg = MIMEText(content_html, "html", "utf-8")
     msg["Subject"] = Header(subject, "utf-8")
@@ -459,16 +478,16 @@ def send_mail(subject, content_html):
                 s.login(user, pwd)
                 s.sendmail(user, to, msg.as_string())
             print("已发信", subject)
-            return
+            return True
         except Exception as e:
             print("[发信失败，重试]", e)
             time.sleep(5)
-    raise SystemExit("发信失败：检查 MAIL_USER 是不是邮箱地址、MAIL_PASS 是不是授权码")
+    raise RuntimeError("发信失败：检查 MAIL_USER 是不是邮箱地址、MAIL_PASS 是不是授权码")
 
 
 def render_index(st):
     esc = html.escape
-    items = sorted(st["items"].values(), key=lambda x: (x.get("date") or "0000", x["found"]), reverse=True)
+    items = sorted(st["items"].values(), key=lambda x: (bool(x.get("priority") and x.get("score")), x.get("date") or "0000", x["found"]), reverse=True)
     rows = []
     for it in items[:500]:
         hot = it.get("score", 0) > 0
@@ -489,12 +508,12 @@ ul{{list-style:none;padding:0;margin:0}}li{{padding:12px 0;border-bottom:1px sol
 li a{{color:var(--fg);text-decoration:none;font-size:16px}}li.hot a{{color:var(--acc);font-weight:600}}li b{{color:var(--acc);font-weight:600}}
 </style></head><body><main>
 <h1>广外通知雷达</h1><div class=m>更新于 {now} · {len(items)} 条</div>
-<div class=bar><button data-k="★" class=on>★重要</button><button data-k="">全部</button><button data-k="访学 交流 交换 境外 海外">访学</button>
+<div class=bar><button data-k="国际项目" class=on>国际项目</button><button data-k="★">★重要</button><button data-k="">全部</button><button data-k="访学 交流 交换 境外 海外">访学</button>
 <button data-k="奖学金 助学金 资助 补助">奖助</button><button data-k="竞赛 大赛">竞赛</button><button data-k="会计学院">会计学院</button></div>
 <input type=search id=q placeholder="搜索标题或来源">
 <ul id=l>{''.join(rows)}</ul></main>
 <script>
-let k='★';const q=document.getElementById('q');
+let k='国际项目';const q=document.getElementById('q');
 function f(){{const w=q.value.trim().split(/\\s+/).filter(Boolean);const ks=k?k.split(' '):[];
 for(const li of document.querySelectorAll('#l li')){{const t=li.dataset.t+(li.classList.contains('hot')?'★':'');
 li.style.display=(w.every(x=>t.includes(x))&&(!ks.length||ks.some(x=>t.includes(x))))?'':'none'}}}}
@@ -510,81 +529,222 @@ def load_state():
 
 
 def save_state(st):
-    with open(STATE, "w", encoding="utf-8") as f:
+    temporary = STATE + ".tmp"
+    with open(temporary, "w", encoding="utf-8") as f:
         json.dump(st, f, ensure_ascii=False, indent=1)
+    os.replace(temporary, STATE)
+
+
+def collect_source(source):
+    """Keep complete results from earlier pages if a later page fails."""
+    name, url = source
+    project = source in international.SOURCES
+    found, visited, errors = [], set(), []
+    current = url
+    for _ in range(3 if project else 1):
+        if not current or current in visited:
+            break
+        visited.add(current)
+        try:
+            page = get(current)
+            rows = international.parse_list(current, page) if project else parse_list(current, page)
+            if project and not rows:
+                raise ValueError("国际项目列表为空，请检查网站结构")
+            for row in rows:
+                row.setdefault("source", name)
+            found.extend(rows)
+            current = international.next_page(current, page) if project else None
+        except Exception as exc:
+            errors.append(f"{current}: {exc}")
+            break
+    return source, found, errors
+
+
+def active_opportunity(it, art):
+    """Backfill recent opportunities, never flood the inbox with years of archives."""
+    today = datetime.now(CST).date()
+    if art.get("deadline_iso"):
+        return datetime.strptime(art["deadline_iso"], "%Y-%m-%d").date() >= today
+    try:
+        published = datetime.strptime(it.get("date", ""), "%Y-%m-%d").date()
+    except ValueError:
+        return True  # Missing dates must not silently discard a new opportunity.
+    return (today - published).days <= 45
+
+
+def apply_article(it, art, first=False):
+    """A pending delivery survives caps, fetch errors and SMTP failures."""
+    previous = it.get("content_hash")
+    fingerprint = international.content_hash(it, art)
+    if it.get("priority"):
+        it["score"] = international.classify(it, art)
+    changed = previous is not None and previous != fingerprint
+    static_update = it.get("category") in ("ztqk", "hzbx") and (
+        changed or (it.get("pending_reason") == "updated" and bool(it.get("pending_hash"))))
+    if static_update:
+        it["score"] = max(it["score"], 80)
+    update_alert = changed or (it.get("pending_reason") == "updated" and bool(it.get("pending_hash")))
+    eligible = it.get("score", 0) > 0 and (active_opportunity(it, art) or update_alert)
+    if not eligible:
+        it.pop("pending_hash", None)
+        it.pop("pending_reason", None)
+    elif not first and (it.get("new_candidate") or changed):
+        if fingerprint != it.get("delivered_hash"):
+            it["pending_hash"] = fingerprint
+            it["pending_reason"] = "updated" if changed else "new"
+            if not changed and it.get("priority") and it.get("date"):
+                try:
+                    age = (datetime.now(CST).date() - datetime.strptime(it["date"], "%Y-%m-%d").date()).days
+                    if age > 7:
+                        it["pending_reason"] = "backfill"
+                except ValueError:
+                    pass
+    elif it.get("pending_hash") and fingerprint != it["pending_hash"]:
+        it["pending_hash"] = fingerprint
+    it["content_hash"] = fingerprint
+    it["deadline"] = art.get("deadline", "")
+    it["deadline_iso"] = art.get("deadline_iso", "")
+    it.pop("new_candidate", None)
+    it.pop("detail_error", None)
+
+
+def pending_items(st):
+    return sorted((x for x in st["items"].values() if x.get("pending_hash")),
+                  key=lambda x: (-x.get("priority", 0), x.get("found", ""),
+                                 -int(re.sub(r"\D", "", x.get("date") or "0")), -x.get("score", 0), x["url"]))
+
+
+def deliver_pending(st, arts, limit=MAX_MAIL):
+    sent, failures = 0, []
+    for it in pending_items(st):
+        if sent >= limit:
+            break
+        art = arts.get(it["url"])
+        if art is None:
+            continue
+        try:
+            if not send_mail(mail_subject(it, art), mail_html(it, art)):
+                raise RuntimeError("邮件配置缺失，通知保留在待发送队列")
+        except Exception as exc:
+            failures.append(f"{it['url']}: {exc}")
+            break  # SMTP outages must not consume the remaining queue.
+        it["delivered_hash"] = it.pop("pending_hash")
+        it["delivered_at"] = datetime.now(CST).isoformat(timespec="minutes")
+        it.pop("pending_reason", None)
+        save_state(st)  # Checkpoint successful deliveries before attempting another.
+        sent += 1
+        time.sleep(1)
+    return sent, failures
 
 
 def main():
     dry = "--dry-run" in sys.argv
+    only_international = "--international-only" in sys.argv
     st = load_state()
-    now = datetime.now(CST).isoformat(timespec="minutes")
-    new = []
-    for name, url in SOURCES:
-        try:
-            items = parse_list(url, get(url))
-        except Exception as e:
-            print(f"[失败] {name} {url} {e}")
-            continue
-        print(f"[ok] {name} {len(items)} 条")
-        for it in items:
-            if it["url"] in st["items"] or column(it["url"]) not in NOTICE_COLS:
-                continue
-            it.update(source=name, found=now, score=score(it["title"]))
-            st["items"][it["url"]] = it
-            new.append(it)
-
     first = not st.get("initialized")
+    now = datetime.now(CST).isoformat(timespec="minutes")
+    sources = international.SOURCES if only_international else SOURCES
+    new, observed, errors = [], set(), []
+    st.setdefault("source_health", {})
+    # The same CMS article may appear under multiple column URLs.
+    identities = {urllib.parse.urlparse(x["url"]).path.rsplit("/", 1)[-1]: x["url"]
+                  for x in st["items"].values() if column(x["url"]) and column(x["url"])[0] == "internationaloffice"}
+    with ThreadPoolExecutor(max_workers=6) as pool:
+        results = list(pool.map(collect_source, sources))
+    for (name, url), items, failures in results:
+        st["source_health"][url] = {"checked_at": now, "items": len(items), "errors": failures}
+        print(f"[{'失败' if failures else 'ok'}] {name} {len(items)} 条 {str(failures) if failures else ''}")
+        if (name, url) in international.SOURCES:
+            errors.extend(failures)
+        for row in items:
+            priority = row.get("priority", 0)
+            if not priority and column(row["url"]) not in NOTICE_COLS:
+                continue
+            if column(row["url"]) and column(row["url"])[0] == "internationaloffice":
+                identity = urllib.parse.urlparse(row["url"]).path.rsplit("/", 1)[-1]
+                row["url"] = identities.setdefault(identity, row["url"])
+            known = st["items"].get(row["url"])
+            if known is None:
+                row.update(found=now, score=score(row["title"]), new_candidate=True)
+                st["items"][row["url"]] = row
+                new.append(row)
+                known = row
+            elif priority:
+                was_priority = known.get("priority")
+                known.update({k: v for k, v in row.items() if v or k not in known})
+                if not was_priority:
+                    known["new_candidate"] = True
+            observed.add(known["url"])
+
+    todo = {x["url"]: x for x in st["items"].values()
+            if x.get("new_candidate") or x.get("pending_hash") or (x.get("priority") and x["url"] in observed)}
+    if not only_international:
+        for x in [x for x in st["items"].values() if not has_page(x)][:30]:
+            todo.setdefault(x["url"], x)
     arts = {}
-    # 新通知全部抓正文；旧通知补做手机版页面（每轮最多30篇，慢慢补齐）
-    todo = [x for x in new] + [x for x in st["items"].values() if not has_page(x) and x not in new][:40]
-    for it in todo:
+    def fetch_one(it):
         try:
             art = fetch_article(it["url"])
+            if not art["paras"] and not art["atts"]:
+                raise ValueError("未取得正文或附件，稍后重试")
+            if it.get("priority"):
+                art = enrich_article(it, art)
+            return it, art, None
+        except Exception as exc:
+            return it, None, str(exc)
+    with ThreadPoolExecutor(max_workers=6) as pool:
+        for it, art, failure in pool.map(fetch_one, todo.values()):
+            if failure:
+                it["detail_error"] = failure
+                print("[正文失败]", it["url"], failure)
+                if it.get("priority"):
+                    errors.append(f"{it['url']}: {failure}")
+                continue
             arts[it["url"]] = art
-            it["deadline"] = art["deadline"]
             if not it.get("date") and art["date"]:
                 it["date"] = art["date"]
+            apply_article(it, art, first)
             if not dry:
                 render_article(it, art)
                 it["page"] = True
-        except Exception as e:
-            print("[正文失败]", it["url"], e)
-
-    new.sort(key=lambda x: -x["score"])
-    print(f"\n新通知 {len(new)} 条{'（首次运行，只建底库）' if first else ''}")
-    for it in new[:30]:
-        a = arts.get(it["url"], {})
-        print(("★ " if it["score"] else "  ") + f"{it['date']} [{it['source']}] {it['title']}  截止:{a.get('deadline','')}")
-
-    if new and not first and not dry:
-        hot = [x for x in new if x["score"] and x["url"] in arts][:MAX_MAIL]
-        for it in hot:
-            art = arts[it["url"]]
-            send_mail(mail_subject(it, art), mail_html(it, art))
-            time.sleep(3)
-
-    # 在网页上手动点 Run workflow 时，发一封测试邮件，确认邮箱通道是通的
-    if os.environ.get("GITHUB_EVENT_NAME") == "workflow_dispatch" and not dry:
-        recent = sorted((x for x in st["items"].values() if x.get("score")),
-                        key=lambda x: (bool(x.get("deadline")), x.get("date") or ""), reverse=True)[:5]
-        # 拿最近一条重要通知按正式格式发一封，顺便看排版
-        for x in recent:
-            try:
-                art = fetch_article(x["url"])
-            except Exception as e:
-                print("[样例正文失败]", e)
-                continue
-            send_mail("【样例】" + mail_subject(x, art), mail_html(x, art))
-            break
-        else:
-            send_mail("广外通知雷达 测试邮件", mail_shell(
-                f"<h1 style='margin:0;font-family:{SERIF};font-size:23px;color:{INK}'>邮件通道已接通</h1>", "邮件通道已接通"))
-
+    pending = pending_items(st)
+    print(f"新发现 {len(new)} 条，待发送 {len(pending)} 条，本轮上限 {MAX_MAIL} 封")
+    for it in pending:
+        print(f"[待发送/{it.get('pending_reason')}] {it.get('date', '')} [{it['source']}] {it['title']} 截止:{it.get('deadline', '')}")
+    if "--preview-dir" in sys.argv:
+        dest = sys.argv[sys.argv.index("--preview-dir") + 1]
+        os.makedirs(dest, exist_ok=True)
+        for it in pending:
+            if it["url"] in arts:
+                with open(os.path.join(dest, page_id(it["url"]) + ".html"), "w", encoding="utf-8") as f:
+                    f.write(mail_html(it, arts[it["url"]]))
+        with open(os.path.join(dest, "verification.json"), "w", encoding="utf-8") as f:
+            json.dump({"checked_at": now, "dry_run": dry, "new": len(new), "pending": pending,
+                       "source_health": st["source_health"], "errors": errors}, f, ensure_ascii=False, indent=2)
     if dry:
+        if errors:
+            raise SystemExit(f"验证发现 {len(errors)} 项抓取失败")
         return
     st["initialized"] = True
     save_state(st)
+    sent, mail_errors = deliver_pending(st, arts)
+    errors.extend(mail_errors)
+    # Test mail is opt-in; dispatching a normal run must not create duplicate samples.
+    if os.environ.get("SEND_SAMPLE") == "true":
+        sample = next((x for x in st["items"].values() if x.get("score") and x["url"] in arts), None)
+        if sample:
+            if not send_mail("【样例】" + mail_subject(sample, arts[sample["url"]]), mail_html(sample, arts[sample["url"]])):
+                errors.append("样例邮件未发送：配置缺失")
+    save_state(st)
     render_index(st)
+    print(f"本轮已发送 {sent} 封，待下轮发送 {len(pending_items(st))} 封")
+    if errors:
+        # The existing workflow saves records only on a successful script exit.
+        # Recoverable network/SMTP errors must still persist delivery receipts.
+        for error in errors:
+            safe_error = str(error).replace("%", "%25").replace("\r", "%0D").replace("\n", "%0A")
+            print(f"::warning::{safe_error}")
+        print(f"发现 {len(errors)} 项可重试异常；未发送通知已保留，详情见上方日志")
 
 
 if __name__ == "__main__":
