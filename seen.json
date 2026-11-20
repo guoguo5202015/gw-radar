@@ -4068,102 +4068,114 @@
    "deadline": "11月19日",
    "deadline_iso": "",
    "page": true
+  },
+  "https://nstu.gdufs.edu.cn/info/1056/69061.htm": {
+   "title": "广东外语外贸大学2025-2026学年新疆籍少数民族本科学生奖学金拟获奖名单公示",
+   "url": "https://nstu.gdufs.edu.cn/info/1056/69061.htm",
+   "date": "2026-11-02",
+   "source": "学生工作部",
+   "found": "2026-11-20T11:56+08:00",
+   "score": 0,
+   "content_hash": "fa2d4f54c396bd930e718128bff4956848f52da6c4b2215cc1b5f9f4e7468a46",
+   "deadline": "",
+   "deadline_iso": "",
+   "page": true
   }
  },
  "initialized": true,
  "source_health": {
   "https://internationaloffice.gdufs.edu.cn/gjxm/ztqk.htm": {
-   "checked_at": "2026-11-20T06:58+08:00",
+   "checked_at": "2026-11-20T11:56+08:00",
    "items": 5,
    "errors": []
   },
   "https://internationaloffice.gdufs.edu.cn/gjxm/jhsxm.htm": {
-   "checked_at": "2026-11-20T06:58+08:00",
+   "checked_at": "2026-11-20T11:56+08:00",
    "items": 30,
    "errors": []
   },
   "https://internationaloffice.gdufs.edu.cn/gjxm/dxpcxm.htm": {
-   "checked_at": "2026-11-20T06:58+08:00",
+   "checked_at": "2026-11-20T11:56+08:00",
    "items": 30,
    "errors": []
   },
   "https://internationaloffice.gdufs.edu.cn/gjxm/sxwxm.htm": {
-   "checked_at": "2026-11-20T06:58+08:00",
+   "checked_at": "2026-11-20T11:56+08:00",
    "items": 30,
    "errors": []
   },
   "https://internationaloffice.gdufs.edu.cn/gjxm/ljwxm.htm": {
-   "checked_at": "2026-11-20T06:58+08:00",
+   "checked_at": "2026-11-20T11:56+08:00",
    "items": 30,
    "errors": []
   },
   "https://internationaloffice.gdufs.edu.cn/gjxm/hsqxm.htm": {
-   "checked_at": "2026-11-20T06:58+08:00",
+   "checked_at": "2026-11-20T11:56+08:00",
    "items": 30,
    "errors": []
   },
   "https://internationaloffice.gdufs.edu.cn/gjxm/hzbx.htm": {
-   "checked_at": "2026-11-20T06:58+08:00",
+   "checked_at": "2026-11-20T11:56+08:00",
    "items": 2,
    "errors": []
   },
   "https://internationaloffice.gdufs.edu.cn/gjxm/fxjw.htm": {
-   "checked_at": "2026-11-20T06:58+08:00",
+   "checked_at": "2026-11-20T11:56+08:00",
    "items": 30,
    "errors": []
   },
   "https://nstu.gdufs.edu.cn/": {
-   "checked_at": "2026-11-20T06:58+08:00",
+   "checked_at": "2026-11-20T11:56+08:00",
    "items": 22,
    "errors": []
   },
   "https://kjxy.gdufs.edu.cn/xsgz/xsdt.htm": {
-   "checked_at": "2026-11-20T06:58+08:00",
+   "checked_at": "2026-11-20T11:56+08:00",
    "items": 5,
    "errors": []
   },
   "https://kjxy.gdufs.edu.cn/gjjl/jlxm.htm": {
-   "checked_at": "2026-11-20T06:58+08:00",
+   "checked_at": "2026-11-20T11:56+08:00",
    "items": 5,
    "errors": []
   },
   "https://kjxy.gdufs.edu.cn/": {
-   "checked_at": "2026-11-20T06:58+08:00",
+   "checked_at": "2026-11-20T11:56+08:00",
    "items": 13,
    "errors": []
   },
   "https://internationaloffice.gdufs.edu.cn/tzgg1/gjxm.htm": {
-   "checked_at": "2026-11-20T06:58+08:00",
+   "checked_at": "2026-11-20T11:56+08:00",
    "items": 2,
    "errors": []
   },
   "https://internationaloffice.gdufs.edu.cn/gs/gjxm.htm": {
-   "checked_at": "2026-11-20T06:58+08:00",
+   "checked_at": "2026-11-20T11:56+08:00",
    "items": 1,
    "errors": []
   },
   "https://internationaloffice.gdufs.edu.cn/": {
-   "checked_at": "2026-11-20T06:58+08:00",
+   "checked_at": "2026-11-20T11:56+08:00",
    "items": 25,
    "errors": []
   },
   "https://jwb.gdufs.edu.cn/xwtz/tz.htm": {
-   "checked_at": "2026-11-20T06:58+08:00",
+   "checked_at": "2026-11-20T11:56+08:00",
    "items": 4,
    "errors": []
   },
   "https://jwb.gdufs.edu.cn/xwtz/jxtz.htm": {
-   "checked_at": "2026-11-20T06:58+08:00",
+   "checked_at": "2026-11-20T11:56+08:00",
    "items": 5,
    "errors": []
   },
   "https://youth.gdufs.edu.cn/": {
-   "checked_at": "2026-11-20T06:58+08:00",
+   "checked_at": "2026-11-20T11:56+08:00",
    "items": 10,
    "errors": []
   },
   "https://gwcxcy.gdufs.edu.cn/": {
-   "checked_at": "2026-11-20T06:58+08:00",
+   "checked_at": "2026-11-20T11:56+08:00",
    "items": 19,
    "errors": []
   }
