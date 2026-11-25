@@ -4108,102 +4108,162 @@
    "deadline": "",
    "deadline_iso": "",
    "page": true
+  },
+  "https://kjxy.gdufs.edu.cn/info/1107/9007.htm": {
+   "title": "关于会计学院林语晴同学学籍信息变更的公示",
+   "url": "https://kjxy.gdufs.edu.cn/info/1107/9007.htm",
+   "date": "2026-10-23",
+   "source": "会计学院",
+   "found": "2026-11-25T15:10+08:00",
+   "score": 0,
+   "content_hash": "dca6a780c99708ca231f73ab244c66a3eed8a46e45d9367ea23774e56e890e8f",
+   "deadline": "",
+   "deadline_iso": "",
+   "page": true
+  },
+  "https://kjxy.gdufs.edu.cn/info/1107/8827.htm": {
+   "title": "会计学院关于公布2027年会计学学术型硕士研究生推免考核名单的通知",
+   "url": "https://kjxy.gdufs.edu.cn/info/1107/8827.htm",
+   "date": "2026-09-18",
+   "source": "会计学院",
+   "found": "2026-11-25T15:10+08:00",
+   "score": 0,
+   "content_hash": "183e1cd1627e3c4db30087b413caf2b9c8ad5c1edfc6cfef45f1cb5022ecd4d7",
+   "deadline": "",
+   "deadline_iso": "",
+   "page": true
+  },
+  "https://jwb.gdufs.edu.cn/info/1044/3566.htm": {
+   "title": "关于开展制定2025版本科人才培养方案调研工作的通知",
+   "url": "https://jwb.gdufs.edu.cn/info/1044/3566.htm",
+   "date": "2023-09-28",
+   "source": "教务部",
+   "found": "2026-11-25T15:10+08:00",
+   "score": 0,
+   "content_hash": "46f8d364c2ac4ad0fc394e466225d6a112406535fe8d9dceb9d029ccc7658d3d",
+   "deadline": "",
+   "deadline_iso": "",
+   "page": true
+  },
+  "https://jwb.gdufs.edu.cn/info/1044/3506.htm": {
+   "title": "关于召开一流课程申报指导会（线下课程专场）的通知",
+   "url": "https://jwb.gdufs.edu.cn/info/1044/3506.htm",
+   "date": "2023-06-16",
+   "source": "教务部",
+   "found": "2026-11-25T15:10+08:00",
+   "score": 0,
+   "content_hash": "9e28fc51dc64480799fb8daae5a88875f711626d6a72f3b744fe6881cf80e2aa",
+   "deadline": "6月19日17:00",
+   "deadline_iso": "",
+   "page": true
+  },
+  "https://jwb.gdufs.edu.cn/info/1044/3503.htm": {
+   "title": "关于召开一流课程申报指导会（线上线下混合式课程专场）的通知",
+   "url": "https://jwb.gdufs.edu.cn/info/1044/3503.htm",
+   "date": "2023-06-13",
+   "source": "教务部",
+   "found": "2026-11-25T15:10+08:00",
+   "score": 0,
+   "content_hash": "c17d04dc2beab88be82640bf1b2a3c7253c9cab21fd8635dcda603700e121a19",
+   "deadline": "",
+   "deadline_iso": "",
+   "page": true
   }
  },
  "initialized": true,
  "source_health": {
   "https://internationaloffice.gdufs.edu.cn/gjxm/ztqk.htm": {
-   "checked_at": "2026-11-25T07:46+08:00",
+   "checked_at": "2026-11-25T15:10+08:00",
    "items": 5,
    "errors": []
   },
   "https://internationaloffice.gdufs.edu.cn/gjxm/jhsxm.htm": {
-   "checked_at": "2026-11-25T07:46+08:00",
+   "checked_at": "2026-11-25T15:10+08:00",
    "items": 30,
    "errors": []
   },
   "https://internationaloffice.gdufs.edu.cn/gjxm/dxpcxm.htm": {
-   "checked_at": "2026-11-25T07:46+08:00",
+   "checked_at": "2026-11-25T15:10+08:00",
    "items": 30,
    "errors": []
   },
   "https://internationaloffice.gdufs.edu.cn/gjxm/sxwxm.htm": {
-   "checked_at": "2026-11-25T07:46+08:00",
+   "checked_at": "2026-11-25T15:10+08:00",
    "items": 30,
    "errors": []
   },
   "https://internationaloffice.gdufs.edu.cn/gjxm/ljwxm.htm": {
-   "checked_at": "2026-11-25T07:46+08:00",
+   "checked_at": "2026-11-25T15:10+08:00",
    "items": 30,
    "errors": []
   },
   "https://internationaloffice.gdufs.edu.cn/gjxm/hsqxm.htm": {
-   "checked_at": "2026-11-25T07:46+08:00",
+   "checked_at": "2026-11-25T15:10+08:00",
    "items": 30,
    "errors": []
   },
   "https://internationaloffice.gdufs.edu.cn/gjxm/hzbx.htm": {
-   "checked_at": "2026-11-25T07:46+08:00",
+   "checked_at": "2026-11-25T15:10+08:00",
    "items": 2,
    "errors": []
   },
   "https://internationaloffice.gdufs.edu.cn/gjxm/fxjw.htm": {
-   "checked_at": "2026-11-25T07:46+08:00",
+   "checked_at": "2026-11-25T15:10+08:00",
    "items": 30,
    "errors": []
   },
   "https://nstu.gdufs.edu.cn/": {
-   "checked_at": "2026-11-25T07:46+08:00",
+   "checked_at": "2026-11-25T15:10+08:00",
    "items": 22,
    "errors": []
   },
   "https://kjxy.gdufs.edu.cn/xsgz/xsdt.htm": {
-   "checked_at": "2026-11-25T07:46+08:00",
+   "checked_at": "2026-11-25T15:10+08:00",
    "items": 5,
    "errors": []
   },
   "https://kjxy.gdufs.edu.cn/gjjl/jlxm.htm": {
-   "checked_at": "2026-11-25T07:46+08:00",
+   "checked_at": "2026-11-25T15:10+08:00",
    "items": 5,
    "errors": []
   },
   "https://kjxy.gdufs.edu.cn/": {
-   "checked_at": "2026-11-25T07:46+08:00",
+   "checked_at": "2026-11-25T15:10+08:00",
    "items": 13,
    "errors": []
   },
   "https://internationaloffice.gdufs.edu.cn/tzgg1/gjxm.htm": {
-   "checked_at": "2026-11-25T07:46+08:00",
+   "checked_at": "2026-11-25T15:10+08:00",
    "items": 2,
    "errors": []
   },
   "https://internationaloffice.gdufs.edu.cn/gs/gjxm.htm": {
-   "checked_at": "2026-11-25T07:46+08:00",
+   "checked_at": "2026-11-25T15:10+08:00",
    "items": 1,
    "errors": []
   },
   "https://internationaloffice.gdufs.edu.cn/": {
-   "checked_at": "2026-11-25T07:46+08:00",
+   "checked_at": "2026-11-25T15:10+08:00",
    "items": 25,
    "errors": []
   },
   "https://jwb.gdufs.edu.cn/xwtz/tz.htm": {
-   "checked_at": "2026-11-25T07:46+08:00",
+   "checked_at": "2026-11-25T15:10+08:00",
    "items": 4,
    "errors": []
   },
   "https://jwb.gdufs.edu.cn/xwtz/jxtz.htm": {
-   "checked_at": "2026-11-25T07:46+08:00",
+   "checked_at": "2026-11-25T15:10+08:00",
    "items": 5,
    "errors": []
   },
   "https://youth.gdufs.edu.cn/": {
-   "checked_at": "2026-11-25T07:46+08:00",
+   "checked_at": "2026-11-25T15:10+08:00",
    "items": 10,
    "errors": []
   },
   "https://gwcxcy.gdufs.edu.cn/": {
-   "checked_at": "2026-11-25T07:46+08:00",
+   "checked_at": "2026-11-25T15:10+08:00",
    "items": 19,
    "errors": []
   }
